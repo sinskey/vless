@@ -3,11 +3,11 @@
 import { connect } from 'cloudflare:sockets';
 
 
-var ThisVersion = "3.2";
+var ThisVersion = "3.2.1";
 var userID = "12345678-1111-1234-1234-1234567890ab";
 var AccessSubscription = "_AccessSubscription_";
 
-var proxyIP = 'de.cip.tronbank.site';
+var proxyIP = 'cip.limil.ip-ddns.com';
 
 var pathName;
 var hostName;
