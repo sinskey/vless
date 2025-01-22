@@ -5,6 +5,8 @@ import { connect } from 'cloudflare:sockets';
 
 var ThisVersion = "3.2";
 var userID = "12345678-1111-1234-1234-1234567890ab";
+var AccessSubscription = "_AccessSubscription_";
+
 var proxyIP = 'de.cip.tronbank.site';
 
 var pathName;
@@ -28,8 +30,9 @@ export default {
 
 				hostName = request.headers.get('Host');
                 const AccessAdvancedConfig = userID;
-                const AccessSubscription = 'sub/' + userID;
-
+                if(AccessSubscription == "_AccessSubscription_"){
+                    AccessSubscription = 'sub/' + userID;
+                }
 				switch (pathName) {
 					case '/':
 						return await MyHomeGame();
@@ -596,8 +599,8 @@ async function AdvancedConfig() {
     <button type="button" id="qrsub" onclick="openQR('subscription')">QR Code</button>
   </h3>
 
-  https://${hostName}/sub/${userID}#${CnfgName}
-  <input type="hidden" id="subscription" value="https://${hostName}/sub/${userID}#${CnfgName}">
+  https://${hostName}/${AccessSubscription}#${CnfgName}
+  <input type="hidden" id="subscription" value="https://${hostName}/${AccessSubscription}#${CnfgName}">
   </div>
   </div>
   <div id="qrcode-container" onclick="closeQR()"></div>
