@@ -7,7 +7,7 @@ var ThisVersion = "3.2.1";
 var userID = "12345678-1111-1234-1234-1234567890ab";
 var AccessSubscription = "_AccessSubscription_";
 
-var proxyIP = 'cip.limil.ip-ddns.com';
+var proxyIP = atob('Y2lwLmxpbWlsLmlwLWRkbnMuY29t');
 
 var pathName;
 var hostName;
@@ -508,7 +508,7 @@ async function resolveDNS(domain) {
 }
 
 async function AdvancedConfig() {
-  const pxipdomain = atob('YnBiLnlvdXNlZi5pc2VnYXJvLmNvbQ==');
+  const pxipdomain = atob('Y2lwLmxpbWlsLmlwLWRkbnMuY29t');
   const dnsdomain = await resolveDNS(hostName);
   const CnfgName = hostName.split('.')[0];
   var addresslist = "<datalist id='addresslist'><option value='"+hostName+"'><option value='www.speedtest.net'>";
