@@ -1,6 +1,7 @@
 # Free-Internet
-Access to Internet Freely
+Access to Free Internet
 
+for using this project better to use [**Advanced Mode**](#advanced-mode)
 
 ## Default Mode
 
