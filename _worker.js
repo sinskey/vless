@@ -30,7 +30,7 @@ export default {
 
 				hostName = request.headers.get('Host');
                 const AccessAdvancedConfig = userID;
-                if(AccessSubscription == "_AccessSubscription_"){
+                if(AccessSubscription == "_"+"AccessSubscription"+"_"){
                     AccessSubscription = 'sub/' + userID;
                 }
 				switch (pathName) {
