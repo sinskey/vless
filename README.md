@@ -28,3 +28,19 @@ for using this project better to use [**Advanced Mode**](#advanced-mode)
  
 * **[Functions]**
   * it required to changeing Functions Name you cn use 🎁 to Generate random name.
+
+---
+
+<details>
+  
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXH7KG85RT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-XXH7KG85RT');
+</script>
+
+</details> 
