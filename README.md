@@ -13,7 +13,7 @@ for using this project better to use [**Advanced Mode**](#advanced-mode)
 
 ## Advanced Mode
 
-### Use: https://limilco.github.io/Free-Internet/ficoder.html to ReCode the project.
+### Use: [https://limilco.github.io/Free-Internet/ficoder.html](https://limilco.github.io/Free-Internet/ficoder.html) to ReCode the project.
 
 * **[Default UUID]**
   * by Generating Default UUID no need for set UUID in (Variables and Secrets)
