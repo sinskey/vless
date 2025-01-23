@@ -644,7 +644,7 @@ function load_defalt(){
 	host.value = defalt_address;
 	sni.value = defalt_address;
 	pxip.value = defalt_pxip;
-	GetIPs();
+	s();
 }
 function cstm(){
     if(custom.checked){
@@ -731,7 +731,7 @@ config.value = atob("dmxlc3M=")+"://"+defalt_uuid+"@"+caddress+":"+cport+"?encry
    }
 
    const GetIPs = async () => {
-    ocument.getElementById('otipdata').innerHTML = document.getElementById('clipdata').innerHTML = '---';
+    document.getElementById('otipdata').innerHTML = document.getElementById('clipdata').innerHTML = '---';
     const ipResponse = await fetch('https://ipwho.is/' + '?nocache=' + Date.now(), { cache: "no-store" });
     const ipResponseObj = await ipResponse.json();
     var ipdataun = ipResponseObj.ip + '  <b>'+ipResponseObj.country+' ('+ipResponseObj.country_code+') </b>';
