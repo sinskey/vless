@@ -731,7 +731,7 @@ config.value = atob("dmxlc3M=")+"://"+defalt_uuid+"@"+caddress+":"+cport+"?encry
    }
 
    const GetIPs = async () => {
-
+    ocument.getElementById('otipdata').innerHTML = document.getElementById('clipdata').innerHTML = '---';
     const ipResponse = await fetch('https://ipwho.is/' + '?nocache=' + Date.now(), { cache: "no-store" });
     const ipResponseObj = await ipResponse.json();
     var ipdataun = ipResponseObj.ip + '  <b>'+ipResponseObj.country+' ('+ipResponseObj.country_code+') </b>';
