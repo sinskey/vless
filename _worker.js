@@ -3,15 +3,16 @@
 import { connect } from 'cloudflare:sockets';
 
 
-var ThisVersion = "3.2.1";
+var ThisVersion = "3.3.1";
 var userID = "12345678-1111-1234-1234-1234567890ab";
 var AccessSubscription = "_AccessSubscription_";
 
-var proxyIP = atob('Y2lwLmxpbWlsLmlwLWRkbnMuY29t');
+var proxyIP = atob('Y2lwLnRyb25iYW5rLnNpdGU=');
 
 var pathName;
 var hostName;
-
+var fpaths; 
+var GetPath;
 
 export default {
 	async fetch(request, env) {
@@ -29,18 +30,21 @@ export default {
 			if (!upgradeHeader || upgradeHeader !== 'websocket') {
 
 				hostName = request.headers.get('Host');
-                const AccessAdvancedConfig = userID;
-                if(AccessSubscription == "_"+"AccessSubscription"+"_"){
-                    AccessSubscription = 'sub/' + userID;
-                }
+        const AccessAdvancedConfig = userID;
+        if(AccessSubscription == "_"+"AccessSubscription"+"_"){
+         AccessSubscription = 'sub/' + userID;
+        }
+        const GetParams = new URLSearchParams(url.search);
+        GetPath = GetParams.get("path");
+        fpaths = 'js,css,assets,wp-content,themes,app,cdn,jquery,live';  //Path URL First folder
 				switch (pathName) {
 					case '/':
 						return await MyHomeGame();
 					case `/${AccessSubscription}`:
 						return await getVVConfig();
-          		    case `/${AccessAdvancedConfig}`:
-            			return await AdvancedConfig();
-				    default:
+          case `/${AccessAdvancedConfig}`:
+            return await AdvancedConfig();
+				  default:
 						return new Response('Not found', { status: 404 });
 				}
 			} else {
@@ -508,7 +512,7 @@ async function resolveDNS(domain) {
 }
 
 async function AdvancedConfig() {
-  const pxipdomain = atob('Y2lwLmxpbWlsLmlwLWRkbnMuY29t');
+  const pxipdomain = atob('Y2lwLnRyb25iYW5rLnNpdGU=');
   const dnsdomain = await resolveDNS(hostName);
   const CnfgName = hostName.split('.')[0];
   var addresslist = "<datalist id='addresslist'><option value='"+hostName+"'><option value='www.speedtest.net'>";
@@ -545,6 +549,7 @@ async function AdvancedConfig() {
   <label for="pxip">ProxyIP: <input type="text" id="pxip" name="pxip" title="" placeholder="" value="" list="pxiplist"/></label>
   <datalist id="pxiplist">
     <option value="${pxipdomain}">
+	  <option value="${atob('YnBiLnlvdXNlZi5pc2VnYXJvLmNvbQ==')}">
     <option value="${atob('cHJveHlpcC5hbWNsdWJzLmtvem93LmNvbQ==')}">
     <option value="${atob('cHJveHlpcC5meHhrLmRlZHluLmlv')}">
   </datalist>
@@ -599,7 +604,7 @@ async function AdvancedConfig() {
     <button type="button" id="qrsub" onclick="openQR('subscription')">QR Code</button>
   </h3>
 
-  https://${hostName}/${AccessSubscription}#${CnfgName}
+  <span id="subscriptionshow">https://${hostName}/${AccessSubscription}#${CnfgName}</span>
   <input type="hidden" id="subscription" value="https://${hostName}/${AccessSubscription}#${CnfgName}">
   </div>
   </div>
@@ -609,8 +614,87 @@ async function AdvancedConfig() {
   let defalt_pxip = "${proxyIP}";
   let defalt_uuid = "${userID}";
 
-  var address=document.getElementById("address"),custom=document.getElementById("custom"),host=document.getElementById("host"),sni=document.getElementById("sni"),pxip=document.getElementById("pxip"),port=document.getElementById("port"),fingerprint=document.getElementById("fingerprint"),config=document.getElementById("config");function load_defalt(){address.value=defalt_address,host.value=defalt_address,sni.value=defalt_address,pxip.value=defalt_pxip}function cstm(){custom.checked?(host.disabled="",sni.disabled=""):(host.disabled="disabled",sni.disabled="disabled")}function copyToClipboard(e){let t=document.getElementById(e).value;navigator.clipboard.writeText(t).then(()=>alert("Config copied to clipboard!")).catch(e=>console.error("Failed to copy text:",e))}function chkaddress(){address.value!==defalt_address?custom.checked=!0:custom.checked=!1,cstm()}function generate(){var e=address.value,t=port.value,d="",l="",i="",n="%3Fed%3D2048",s=defalt_address.split(".")[0];custom.checked&&(l="&host="+host.value,i="&sni="+sni.value),0!=fingerprint.value&&(d="&fp="+fingerprint.value),pxip.value!==defalt_pxip&&(n="live%2F"+btoa(pxip.value.replace(/ /g,"")).replace(/=/g,"%3D")+"%2Fplay.ts%3Fver%3D1080p"),config.value=atob("dmxlc3M=")+"://"+defalt_uuid+"@"+e+":"+t+"?encryption=none&security=tls"+l+d+"&alpn=h2%2Chttp%2F1.1&type=ws"+i+"&path=%2F"+n+"#%F0%9F%90%89%20"+s}load_defalt();
-   const closeQR = () => {
+  let defalt_AcsSub = "${AccessSubscription}";                            
+  let defalt_CnfgName = "${CnfgName}";  
+
+  const fpathss = "${fpaths}"; //*** 3.3.1 
+  const fpath = fpathss.split(',');              //*** 3.3.1   
+  const subpath = 'https://'+defalt_address+'/'+defalt_AcsSub+'#'+defalt_CnfgName; 
+
+var address = document.getElementById("address");
+var custom = document.getElementById("custom");
+var host = document.getElementById("host");
+var sni = document.getElementById("sni");
+var pxip = document.getElementById("pxip");
+var port = document.getElementById("port");
+var fingerprint = document.getElementById("fingerprint");
+var config = document.getElementById("config");
+
+function load_defalt(){
+	address.value = defalt_address;
+	host.value = defalt_address;
+	sni.value = defalt_address;
+	pxip.value = defalt_pxip;
+}
+function cstm(){
+    if(custom.checked){
+       host.disabled = "";
+       sni.disabled = "";
+    }else{
+        host.disabled = "disabled";
+       sni.disabled = "disabled";
+    }
+}
+
+function copyToClipboard(elementId) {
+    const textToCopy = document.getElementById(elementId).value;  //textContent
+    navigator.clipboard.writeText(textToCopy)
+         .then(() => alert('Config copied to clipboard!'))
+         .catch(err => console.error('Failed to copy text:', err));
+}
+
+function chkaddress(){
+    if (address.value !== defalt_address){
+    	 custom.checked = true;
+    }else{
+    	 custom.checked = false;
+    }
+    cstm();
+}
+function generate(){
+    var caddress = address.value;
+    var cport = port.value;
+    var cfingerprint = '';
+    var chost = '';
+    var csni = '';
+    var cpath = '%3Fed%3D2048';
+
+
+    if(custom.checked){
+    	chost = "&host="+host.value;
+    	csni = "&sni="+sni.value;
+    }
+    if(fingerprint.value != 0){
+    	cfingerprint =  "&fp="+fingerprint.value;
+    }
+    if (pxip.value && pxip.value !== defalt_pxip){                                                 //*** 3.3.1
+        var pxipath = (btoa(pxip.value.replace(/ /g, ''))).replace(/=/g, '%3D');
+    	cpath = fpath[Math.floor(Math.random() * fpath.length)]+"%2F"+pxipath+"%2F";
+
+        SetSub('https://'+defalt_address+'/'+defalt_AcsSub+'?path='+pxipath+'#'+defalt_CnfgName);      
+    }else{
+        SetSub(subpath); 
+    } 
+                                                                                   
+
+config.value = atob("dmxlc3M=")+"://"+defalt_uuid+"@"+caddress+":"+cport+"?encryption=none&security=tls"+chost+""+cfingerprint+"&alpn=h2%2Chttp%2F1.1&type=ws"+csni+"&path=%2F"+cpath+"#%F0%9F%90%B2%20"+defalt_CnfgName;
+}
+  const SetSub = (suburl) => {
+    if(!suburl){suburl = subpath;}
+    document.getElementById("subscriptionshow").innerHTML = suburl;
+    document.getElementById("subscription").value = suburl;  
+  } 
+  const closeQR = () => {
           	 let qrcodeContainer = document.getElementById("qrcode-container");
           	 qrcodeContainer.style.display = "none";
           	 qrcodeContainer.innerHTML = "";
@@ -635,6 +719,10 @@ async function AdvancedConfig() {
             });
             qrcodeContainer.appendChild(qrcodeDiv);
    }
+
+
+
+load_defalt();
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   </body>
@@ -655,22 +743,34 @@ async function getVVConfig() {
 	const getDomainIPs = await resolveDNS(hostName);
 	const dfltPrts = ["443", "8443", "2053", "2083", "2087", "2096"];
 	const dfltIcns = ["%E2%9D%A4%EF%B8%8F", "%F0%9F%92%99", "%F0%9F%92%9D", "%F0%9F%92%98", "%F0%9F%92%95", "%F0%9F%96%A4", "%F0%9F%92%93", "%F0%9F%92%97", "%F0%9F%92%96"];
+	const dfltFp = ["chrome", "firefox", "android", "edge"];
+  const fpath = fpaths.split(',');              //*** 3.3.1 
+  var pathForSub = "";
+  if(GetPath){
+  	  GetPath = GetPath.replace(/=/g, '%3D');
+  					pathForSub = fpath[Math.floor(Math.random() * fpath.length)]+"%2F"+GetPath;
+  }
 
 	var CnfgCntr = 1;
 	var vVvMain =
 	`${protocol}` +
 	`://${userID}@${hostName}:443`+
-	`?encryption=none&security=tls&fp=chrome&alpn=h2%2Chttp%2F1.1&type=ws&path=%2F%3Fed%3D2048#${CnfgCntr}%20-%20%F0%9F%90%89%20${CnfgName}\n`;
+	`?encryption=none&security=tls&fp=chrome&alpn=h2%2Chttp%2F1.1&type=ws&path=%2F${pathForSub}#${CnfgCntr}%20-%20%F0%9F%90%89%20${CnfgName}\n`;
 
   for (var thisIP of getDomainIPs.ipv4) {
   	    CnfgCntr++;
   	    if(thisIP.slice(-1) == "."){thisIP = thisIP.substr(0,thisIP.length - 1);}
         const thisPrt = dfltPrts[Math.floor(Math.random() * dfltPrts.length)];
         const thisIcn = dfltIcns[Math.floor(Math.random() * dfltIcns.length)];
+        const thisFp = dfltFp[Math.floor(Math.random() * dfltFp.length)]; 
+        if(GetPath){
+  					pathForSub = fpath[Math.floor(Math.random() * fpath.length)]+"%2F"+GetPath;
+  			}
+
     	vVvMain +=
 	     `${protocol}` +
 	     `://${userID}@${thisIP}:${thisPrt}`+
-	     `?encryption=none&security=tls&sni=${hostName}&fp=chrome&allowInsecure=1&alpn=h2%2Chttp%2F1.1&type=ws&host=${hostName}&path=%2F%3Fed%3D2048#${CnfgCntr}%20-%20${thisIcn}%20${CnfgName}\n`;
+	     `?encryption=none&security=tls&sni=${hostName}&fp=${thisFp}&allowInsecure=1&alpn=h2%2Chttp%2F1.1&type=ws&host=${hostName}&path=%2F${pathForSub}#${CnfgCntr}%20-%20${thisIcn}%20${CnfgName}\n`;
 
   }
   /*for (var thisIP of getDomainIPs.ipv6) {
