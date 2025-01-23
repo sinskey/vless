@@ -644,7 +644,7 @@ function load_defalt(){
 	host.value = defalt_address;
 	sni.value = defalt_address;
 	pxip.value = defalt_pxip;
-	s();
+	GetIPs();
 }
 function cstm(){
     if(custom.checked){
