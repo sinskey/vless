@@ -3,7 +3,7 @@
 import { connect } from 'cloudflare:sockets';
 
 
-var ThisVersion = "3.3.1";
+var ThisVersion = "3.3.2";
 var userID = "12345678-1111-1234-1234-1234567890ab";
 var AccessSubscription = "_AccessSubscription_";
 
@@ -537,6 +537,15 @@ async function AdvancedConfig() {
   <body>
   <div class="container">
   <h1>v ${ThisVersion} </h1>
+  <div class="line help">
+ 
+    <b>Your IP</b> 
+    @ 
+    <b>Cloudflare:</b> <span id="clipdata">---</b></span>
+    ||
+    <b>Others:</b>  <span id="otipdata">---</span> 
+    <button type="button" id="ipbtn" onclick="GetIPs();" style="margin: 0;padding: 3px 10px;">Get</button>
+  </div> 
   <div class="line">
   <label for="address">Address: <input type="text" id="address" name="address" title="Config Address" placeholder="SubDomin.pages.dev" value="" onchange="chkaddress()"  list="addresslist"/></label>
   ${addresslist}
@@ -635,6 +644,7 @@ function load_defalt(){
 	host.value = defalt_address;
 	sni.value = defalt_address;
 	pxip.value = defalt_pxip;
+	GetIPs();
 }
 function cstm(){
     if(custom.checked){
@@ -720,7 +730,21 @@ config.value = atob("dmxlc3M=")+"://"+defalt_uuid+"@"+caddress+":"+cport+"?encry
             qrcodeContainer.appendChild(qrcodeDiv);
    }
 
+   const GetIPs = async () => {
 
+    const ipResponse = await fetch('https://ipwho.is/' + '?nocache=' + Date.now(), { cache: "no-store" });
+    const ipResponseObj = await ipResponse.json();
+    var ipdataun = ipResponseObj.ip + '  <b>'+ipResponseObj.country+' ('+ipResponseObj.country_code+') </b>';
+    document.getElementById('otipdata').innerHTML = ipdataun;
+
+    const cfIPresponse = await fetch('https://ipv4.icanhazip.com/?nocache=' + Date.now(), { cache: "no-store" });
+    const cfIP = await cfIPresponse.text();
+    const cfResponse = await fetch('https://ipwho.is/?ip=' + cfIP + '&nocache=' + Date.now(), { cache: "no-store" });
+    const cfResponseObj = await cfResponse.json();
+    var ipdatacf = cfResponseObj.ip + '  <b>'+cfResponseObj.country+' ('+cfResponseObj.country_code+') </b>';
+    document.getElementById('clipdata').innerHTML = ipdatacf; //parse
+
+  }
 
 load_defalt();
   </script>
