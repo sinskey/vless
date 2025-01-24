@@ -43,8 +43,6 @@ There are 4 different HTML Game imbedded inside project (not load from other URL
 ![image](https://github.com/user-attachments/assets/a4f6d6b0-9614-4228-b0fc-0c0b4a70fbb2)
 
 
-
-
 ## Thank`s
 1. Thanks to the developers who wrote the [Cloudflare-Workers](https://github.com/topics/cloudflare-workers) core for vless proxy.
 2. Thanks to [BPB Panel](https://github.com/bia-pain-bache/BPB-Worker-Panel) for develop technology and new ideas.
