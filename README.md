@@ -1,4 +1,4 @@
-# [Free-Internet 🐉](https://github.com/liMilCo/Free-Internet)
+# [Free-Internet](https://github.com/liMilCo/Free-Internet)
 Access to Free Internet
 
 for using this project better to use [**Advanced Mode**](#advanced-mode)
@@ -46,7 +46,7 @@ There are 4 different HTML Game imbedded inside project (not load from other URL
 
 ---
 
-<center><a href="https://github.com/liMilCo/Free-Internet"><img src="https://github.githubassets.com/favicons/favicon.png" style="vertical-align: middle;"> Free Internet</a></center>
+<center><a href="https://github.com/liMilCo/Free-Internet"><img src="https://github.githubassets.com/favicons/favicon.png" style="vertical-align: middle;"> Free Internet  🐉</a></center>
 
 ---
 
