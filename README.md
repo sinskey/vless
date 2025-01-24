@@ -1,4 +1,4 @@
-# Free-Internet
+# [Free-Internet](https://github.com/liMilCo/Free-Internet)
 Access to Free Internet
 
 for using this project better to use [**Advanced Mode**](#advanced-mode)
