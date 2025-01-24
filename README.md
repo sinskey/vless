@@ -46,6 +46,10 @@ There are 4 different HTML Game imbedded inside project (not load from other URL
 
 ---
 
+<center><a href="https://github.com/liMilCo/Free-Internet"><img src="https://github.githubassets.com/favicons/favicon.png" style="vertical-align: middle;"> Free Internet</a></center>
+
+---
+
 <details>
   
 <!-- Google tag (gtag.js) -->
