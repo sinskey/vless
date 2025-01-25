@@ -543,13 +543,12 @@ async function AdvancedConfig() {
 
         .line{margin:15px 0;background-color:var(--line-background-color);font-family:monospace;font-size:1rem;word-wrap:break-word;line-height: 1.7rem;}
         .help{font-size:.8rem}
-        #pxip{width:23rem}
         textarea{margin:10px 0;width:98%;height:3.5rem}
         button{margin-top:15px;font-size:16px;font-weight:600;border:none;border-radius:5px;color:#fff;background-color:var(--primary-color);cursor:pointer;transition:background-color .3s}
         button:hover{background-color:#2980b9}
 				label{display: inline-block;}
-        #qrcode-container {display: none;position: fixed;z-index: 1;left: 65vmin;top: 25vmin;padding: 5px;border-radius: 5px;border: 1px solid var(--border-color);overflow: auto;background-color: #FFF;}
-				h1,h2,h3{margin: 0;}
+				#qrcode-container {display: none;place-content: space-around center;align-items: center;position: fixed;z-index: 1;width: 100%;height: 100%;background-color:#000000cc;}
+				.qrcode{padding: 5px;border-radius: 5px;border: 1px solid var(--border-color);overflow: auto;}				h1,h2,h3{margin: 0;}
 				input,select,textarea{padding:2px 5px;border:1px solid var(--border-color);border-radius:5px;font-size:14px;color:var(--text-color);background-color:var(--background-color);box-sizing:border-box;transition:border-color .5s}
 				input[disabled]{background-color: var(--line-background-color);color: var(--background-color);border: 1px dashed var(--background-color);}
 				.floating-button {position: fixed;bottom: 20px;left: 20px;background-color: var(--color);color:  #888;border: none;border-radius: 50%;width: 60px;height: 60px;font-size: 24px;cursor: pointer;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);transition: background-color 0.3s, transform 0.3s;}
@@ -749,10 +748,9 @@ config.value = atob("dmxlc3M=")+"://"+defalt_uuid+"@"+caddress+":"+cport+"?encry
             if(!url){return;}
             let qrcodeContainer = document.getElementById("qrcode-container");
             qrcodeContainer.innerHTML = "";
-            qrcodeContainer.style.display = "block";
+            qrcodeContainer.style.display = "flex";
             let qrcodeDiv = document.createElement("div");
             qrcodeDiv.className = "qrcode";
-            qrcodeDiv.style.padding = "2px";
             qrcodeDiv.style.backgroundColor = "#ffffff";
             new QRCode(qrcodeDiv, {
                 text: url,
