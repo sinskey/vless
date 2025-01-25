@@ -530,6 +530,7 @@ async function AdvancedConfig() {
   <head>
       <meta charset="UTF-8">
       <title>Advanced Config Generator</title>
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <style>
         :root{--color:black;--primary-color:#09639f;--background-color:#fff;--container-background-color:#f9f9f9;--line-background-color:#f2f2f2;--text-color:#333;--border-color:#ddd}
         body,html{height:100%;margin:0}
@@ -543,7 +544,7 @@ async function AdvancedConfig() {
         .line{margin:15px 0;background-color:var(--line-background-color);font-family:monospace;font-size:1rem;word-wrap:break-word;line-height: 1.7rem;}
         .help{font-size:.8rem}
         #pxip{width:23rem}
-        textarea{margin:10px 0;width:98%;height:3rem}
+        textarea{margin:10px 0;width:98%;height:3.5rem}
         button{margin-top:15px;font-size:16px;font-weight:600;border:none;border-radius:5px;color:#fff;background-color:var(--primary-color);cursor:pointer;transition:background-color .3s}
         button:hover{background-color:#2980b9}
 				label{display: inline-block;}
