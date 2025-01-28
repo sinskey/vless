@@ -21,9 +21,9 @@
             <div class="form-control ltr">
                 Get Project Source Code: &nbsp;&nbsp;
                     <a href="https://github.com/liMilCo/Free-Internet" target="_blank">Free Internet</a>
-			</div>
+            </div>
             <div class="form-control">
-            	<button type="button" class="button" onclick="SetPrCode('https://raw.githubusercontent.com/liMilCo/Free-Internet/main/_worker.js')">AutoLoad</button>
+                <button type="button" class="button" onclick="SetPrCode('https://raw.githubusercontent.com/liMilCo/Free-Internet/main/_worker.js')">AutoLoad</button>
 
 
             </div>
@@ -33,9 +33,9 @@
             <div class="form-control ltr">
              * The words you choose should not be repetitive.
             </div>
-		<hr />
+        <hr />
             <form id="configForm">
-            	<!--- ////////////////////////////  URL  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
+                <!--- ////////////////////////////  URL  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
                 <details open>
 
 
@@ -59,7 +59,7 @@
                     <div class="form-control">
                         <label id="lblpanel" for="panel">/UUID<br><i style="font-size:smaller;">Access to [Advanced Config Generator]</i></label>
                         <input type="text" id="panel" name="bpbdata" value="" pattern="[a-z]{3,}$" title="English lower case letters only">
-                        <input type="hidden" id="_panel" value="${AccessAdvancedConfig}">
+                        <input type="hidden" id="_panel" value="_AdvancedConfigURL_">
                     </div>
                     <div class="form-control ltr">
                     * If you change this remember it.
@@ -67,7 +67,7 @@
                     <div class="form-control">
                         <label id="lblsub" for="sub">/sub/UUID</label>
                         <input type="text" id="sub" name="bpbdata" value="" pattern="[a-z]{3,}$" title="English lower case letters only">
-                        <input type="hidden" id="_sub" value="_AccessSubscription_">
+                        <input type="hidden" id="_sub" value="_SubscriptionURL_">
                     </div>
                 </details>
 
@@ -201,8 +201,8 @@
                 localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
             });
             for (const inputSave of inputsSave) {
-            	     const inputSaveEl = document.getElementById(inputSave);
-            	     inputSaveEl.value = localStorage.getItem(inputSave);
+                     const inputSaveEl = document.getElementById(inputSave);
+                     inputSaveEl.value = localStorage.getItem(inputSave);
             }
 
 
@@ -230,16 +230,16 @@
                 if(!TheCode){alert("Please insert BPB Original Code.");SrcCode.focus();return false;}
                 if(IsDuplicates(inputsData) != ''){alert("The word ["+IsDuplicates(inputsData)+"] used more than once!");return false;}
 
-        	    for (const inData of inputsData) {
-        	        const SrchData  = document.getElementById('_'+inData.id);
-        	        var SrchPrfx;
-        	        if(SrchData.value.startsWith("env.")){SrchPrfx = "env."}else if(SrchData.value.startsWith("/")){SrchPrfx = "/"}else{SrchPrfx = ""}
-        	    	//alert(SrchData.value +" = "+ inData.value +" - "+inData.id+" + "+SrchPrfx);
-        	    	if(inData.value){
-	        	    	TheCode = TheCode.replaceAll(SrchData.value, SrchPrfx + inData.value);
-        	    	}
+                for (const inData of inputsData) {
+                    const SrchData  = document.getElementById('_'+inData.id);
+                    var SrchPrfx;
+                    if(SrchData.value.startsWith("env.")){SrchPrfx = "env."}else if(SrchData.value.startsWith("/")){SrchPrfx = "/"}else{SrchPrfx = ""}
+                    //alert(SrchData.value +" = "+ inData.value +" - "+inData.id+" + "+SrchPrfx);
+                    if(inData.value){
+                        TheCode = TheCode.replaceAll(SrchData.value, SrchPrfx + inData.value);
+                    }
                     if(inputsSave.includes(inData.id)){localStorage.setItem(inData.id, inData.value);}
-        	    }
+                }
 
 
                 TheCode = AdvChng(TheCode);
@@ -255,7 +255,7 @@
 
         const AdvChng  = (mTheCode) => {
 
-         	 return mTheCode;
+             return mTheCode;
         }
          var replaceUUID = "UUID";
          const GetUUID  = (id) => {
@@ -271,11 +271,11 @@
         var splitStringsObf = false;
 
         const renGlobObf  = () => {
-        	 if(document.getElementById('renameObf').checked){
-        	 	     splitStringsObf = true;
-        	 }else{
-        	 	     splitStringsObf = false;
-        	 }
+             if(document.getElementById('renameObf').checked){
+                     splitStringsObf = true;
+             }else{
+                     splitStringsObf = false;
+             }
         }
 
         const ObfuscationNewCode = async () => {
@@ -290,63 +290,63 @@
                 //var JavaScriptObfuscator = require('javascript-obfuscator');
                 var obfuscationResult = await JavaScriptObfuscator.obfuscate(TheCode,
                     {
-    					"compact": true,
-    					"config": "",
-    					"controlFlowFlattening": false,
-    					"controlFlowFlatteningThreshold": 0.75,
-    					"debugProtection": false,
-    					"debugProtectionInterval": 0,
-    					"disableConsoleOutput": false,
-    					"domainLock": [],
-    					"domainLockRedirectUrl": "about:blank",
-    					"exclude": [],
-    					"forceTransformStrings": [],
-    					"identifierNamesCache": null,
-    					"identifierNamesGenerator": "hexadecimal",
-    					"identifiersPrefix": "",
-    					"identifiersDictionary": [],
-    					"ignoreImports": false,
-    					"inputFileName": "",
-    					"log": false,
-    					"numbersToExpressions": false,
-    					"optionsPreset": "default",
-    					"renameProperties": false,
-    					"renamePropertiesMode": "safe",
-    					"reservedNames": [],
-    					"reservedStrings": [],
-    					"stringArrayRotate": true,
-    					"seed": 0,
-    					"selfDefending": false,
-    					"stringArrayShuffle": true,
-    					"simplify": true,
-    					"sourceMap": false,
-    					"sourceMapBaseUrl": "",
-    					"sourceMapFileName": "",
-    					"sourceMapMode": "separate",
-    					"sourceMapSourcesMode": "sources-content",
-    					"stringArray": true,
-    					"stringArrayCallsTransform": false,
-    					"stringArrayCallsTransformThreshold": 0.5,
-    					"stringArrayEncoding": [
-    					    					"none"
-    					],
-    					"stringArrayIndexesType": [
-    					    					"hexadecimal-number"
-    					],
-    					"stringArrayIndexShift": true,
-    					"stringArrayWrappersChainedCalls": true,
-    					"stringArrayWrappersCount": 1,
-    					"stringArrayWrappersParametersMaxCount": 2,
-    					"stringArrayWrappersType": "variable",
-    					"stringArrayThreshold": 0.75,
-    					"unicodeEscapeSequence": false,
-    					"deadCodeInjection": false,
-    					"deadCodeInjectionThreshold": 0.4,
-    					"renameGlobals": false,
-    					"splitStrings": splitStringsObf,
-    					"splitStringsChunkLength": 2,
-    					"transformObjectKeys": false,
-    					"target": "node"
+                        "compact": true,
+                        "config": "",
+                        "controlFlowFlattening": false,
+                        "controlFlowFlatteningThreshold": 0.75,
+                        "debugProtection": false,
+                        "debugProtectionInterval": 0,
+                        "disableConsoleOutput": false,
+                        "domainLock": [],
+                        "domainLockRedirectUrl": "about:blank",
+                        "exclude": [],
+                        "forceTransformStrings": [],
+                        "identifierNamesCache": null,
+                        "identifierNamesGenerator": "hexadecimal",
+                        "identifiersPrefix": "",
+                        "identifiersDictionary": [],
+                        "ignoreImports": false,
+                        "inputFileName": "",
+                        "log": false,
+                        "numbersToExpressions": false,
+                        "optionsPreset": "default",
+                        "renameProperties": false,
+                        "renamePropertiesMode": "safe",
+                        "reservedNames": [],
+                        "reservedStrings": [],
+                        "stringArrayRotate": true,
+                        "seed": 0,
+                        "selfDefending": false,
+                        "stringArrayShuffle": true,
+                        "simplify": true,
+                        "sourceMap": false,
+                        "sourceMapBaseUrl": "",
+                        "sourceMapFileName": "",
+                        "sourceMapMode": "separate",
+                        "sourceMapSourcesMode": "sources-content",
+                        "stringArray": true,
+                        "stringArrayCallsTransform": false,
+                        "stringArrayCallsTransformThreshold": 0.5,
+                        "stringArrayEncoding": [
+                                                "none"
+                        ],
+                        "stringArrayIndexesType": [
+                                                "hexadecimal-number"
+                        ],
+                        "stringArrayIndexShift": true,
+                        "stringArrayWrappersChainedCalls": true,
+                        "stringArrayWrappersCount": 1,
+                        "stringArrayWrappersParametersMaxCount": 2,
+                        "stringArrayWrappersType": "variable",
+                        "stringArrayThreshold": 0.75,
+                        "unicodeEscapeSequence": false,
+                        "deadCodeInjection": false,
+                        "deadCodeInjectionThreshold": 0.4,
+                        "renameGlobals": false,
+                        "splitStrings": splitStringsObf,
+                        "splitStringsChunkLength": 2,
+                        "transformObjectKeys": false,
+                        "target": "node"
                     }
                 );
 
@@ -363,13 +363,13 @@
 
 
         const CopyNewCode = (id) => {
-        	 const CopyNewCodeEl  = document.getElementById(id);
-        	 if(CopyNewCodeEl.value){copyToClipboard(CopyNewCodeEl.value);}
+             const CopyNewCodeEl  = document.getElementById(id);
+             if(CopyNewCodeEl.value){copyToClipboard(CopyNewCodeEl.value);}
         }
 
         const setRandom = (id) => {
-        	 const setRandomEl = document.getElementById(id);
-        	 if(!setRandomEl.value){setRandomEl.value = generateRandom();}
+             const setRandomEl = document.getElementById(id);
+             if(!setRandomEl.value){setRandomEl.value = generateRandom();}
         }
 
              function generateRandom() {
@@ -384,16 +384,16 @@
                 }
                 return password;
             }
- 		let findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) !== index)
+        let findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) !== index)
         const IsDuplicates = (obj) => {
-        	 var arr = [];
-        	 var i = 0;
-        	 for (const inObj of obj) { if(inObj.value){arr[i] = inObj.value; i++;}}
+             var arr = [];
+             var i = 0;
+             for (const inObj of obj) { if(inObj.value){arr[i] = inObj.value; i++;}}
              return findDuplicates(arr);
         }
         const SendFile = (id) => {
-        	 const MyCode  = document.getElementById(id);
-        	 if(MyCode.value){downloadCode("_worker.js",MyCode.value);}
+             const MyCode  = document.getElementById(id);
+             if(MyCode.value){downloadCode("_worker.js",MyCode.value);}
         }
 function downloadCode(filename, text) {
   var element = document.createElement('a');
@@ -409,36 +409,36 @@ function downloadCode(filename, text) {
 }
 
 function GetPrVrsion(InInt) {
-	var PrVersion = 0;
+    var PrVersion = 0;
          if(SrcCode.value){
          var versionMatch = SrcCode.value.match(/ThisVersion\s*=\s*[\"\'](.*?)[\"\']/);
-         	if (versionMatch && versionMatch[1]) {
-         	     PrVersion = versionMatch[1];
-         	}
+            if (versionMatch && versionMatch[1]) {
+                 PrVersion = versionMatch[1];
+            }
          }
          if(InInt){
             PrVersion = versionMatch[1].split(".")[0]+"."+versionMatch[1].split(".")[1]+versionMatch[1].split(".")[2];
-         	PrVersion = parseFloat(BPBVersion);
+            PrVersion = parseFloat(BPBVersion);
          }
          return PrVersion;
 }
 
 function CheckPrVrsion(){
-	var PrVersion = GetPrVrsion();
+    var PrVersion = GetPrVrsion();
 
 
         var NewWordVer = {
-        		"vlessOverWSHandler":"vOWSHandler"
+                "vlessOverWSHandler":"vOWSHandler"
 
         };
         for (var OldWord in NewWordVer) {
-    		if(SrcCode.value.search(NewWordVer[OldWord]) > 1){
-    			document.getElementById("_"+OldWord).value = NewWordVer[OldWord];
-    		}else{
-    			document.getElementById("_"+OldWord).value = OldWord;
-    		}
-	    }
-  	alert("✔️ Project v"+PrVersion+" Loaded.");
+            if(SrcCode.value.search(NewWordVer[OldWord]) > 1){
+                document.getElementById("_"+OldWord).value = NewWordVer[OldWord];
+            }else{
+                document.getElementById("_"+OldWord).value = OldWord;
+            }
+        }
+    alert("✔️ Project v"+PrVersion+" Loaded.");
 }
 
 function GetPrCode(theUrl){
@@ -452,8 +452,8 @@ function GetPrCode(theUrl){
 
 function SetPrCode(CodeLink){
        if(!CodeLink){return false;}
-  	   var  Code = GetPrCode(CodeLink);
-  	   SrcCode.value = Code;
+       var  Code = GetPrCode(CodeLink);
+       SrcCode.value = Code;
        CheckPrVrsion();
 }
     </script>
