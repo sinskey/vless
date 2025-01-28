@@ -1,48 +1,55 @@
 // <!--GAMFC-->version base on commit TDncy4ESqxsjL2fTv2fFauAnwah7EERrSt, time is 2025-01-03 20:47:01 UTC<!--GAMFC-END-->.
 // @ts-ignore
-import { connect } from 'cloudflare:sockets';
 
+function MainConfig() {
+	globalThis.uzerID = "12345678-1111-1234-1234-1234567890ab";
+	globalThis.qrexyIP = atob('Y2lwLnRyb25iYW5rLnNpdGU=');
 
-var ThisVersion = "3.3.3";
-var userID = "12345678-1111-1234-1234-1234567890ab";
-var AccessSubscription = "_AccessSubscription_";
+	//globalThis.pathName;
+}
+function WebConfig() {
+	globalThis.ThisVersion = "3.3.4";
+	globalThis.AccessSubscription = "_SubscriptionURL_";
+	globalThis.AccessAdvancedConfig = "_AdvancedConfigURL_";  
+	globalThis.fpaths = 'js,css,assets,wp-content,themes,app,cdn,jquery,live';  //Path URL: First folder in Sub
 
-var proxyIP = atob('Y2lwLnRyb25iYW5rLnNpdGU=');
-
-var pathName;
-var hostName;
-var fpaths; 
-var GetPath;
+	//globalThis.hostName;					
+	//globalThis.GetPath;
+	//globalThis.CnfgName;
+}
 
 export default {
 	async fetch(request, env) {
 		try {
-			userID = env.UUID || userID;
-			proxyIP = env.PROXYIP || proxyIP;
 
-			if (!isValidUUID(userID))
+			MainConfig();
+			globalThis.UzKey = env.UUID || globalThis.uzerID;
+			globalThis.CLxIP = env.PROXYIP || globalThis.qrexyIP;
+
+			if (!isValidUUID(globalThis.UzKey))
 				throw new Error(`First register the UID.`);
 
 			const url = new URL(request.url);
-			pathName = url.pathname;
+			globalThis.pathName = url.pathname;
 
 			const upgradeHeader = request.headers.get('Upgrade');
 			if (!upgradeHeader || upgradeHeader !== 'websocket') {
 
-				hostName = request.headers.get('Host');
-        const AccessAdvancedConfig = userID;
-        if(AccessSubscription == "_"+"AccessSubscription"+"_"){
-         AccessSubscription = 'sub/' + userID;
-        }
+				WebConfig();
+				globalThis.hostName = request.headers.get('Host');
+        if(globalThis.AccessAdvancedConfig == "_"+"AdvancedConfigURL"+"_"){globalThis.AccessAdvancedConfig = globalThis.UzKey;}
+        if(globalThis.AccessSubscription == "_"+"SubscriptionURL"+"_"){globalThis.AccessSubscription = 'sub/'+globalThis.UzKey;}
         const GetParams = new URLSearchParams(url.search);
-        GetPath = GetParams.get("path");
-        fpaths = 'js,css,assets,wp-content,themes,app,cdn,jquery,live';  //Path URL First folder
-				switch (pathName) {
+        globalThis.GetPath = GetParams.get("path");
+        globalThis.CnfgName = globalThis.hostName.split('.')[0];
+
+
+				switch (globalThis.pathName) {
 					case '/':
 						return await MyHomeGame();
-					case `/${AccessSubscription}`:
+					case `/${globalThis.AccessSubscription}`:
 						return await getVVConfig();
-          case `/${AccessAdvancedConfig}`:
+          case `/${globalThis.AccessAdvancedConfig}`:
             return await AdvancedConfig();
 				  default:
 						return new Response('Not found', { status: 404 });
@@ -56,7 +63,7 @@ export default {
 		}
 	},
 };
-
+import { connect } from 'cloudflare:sockets';
 async function vOWSHandler(request) {
 
 	const webSocketPair = new WebSocketPair();
@@ -98,7 +105,7 @@ async function vOWSHandler(request) {
 				rawDataIndex,
 				vVvVersion = new Uint8Array([0, 0]),
 				isUDP,
-			} = prssVvHeader(chunk, userID);
+			} = prssVvHeader(chunk, globalThis.UzKey);
 			address = addressRemote;
 			portWithRandomLog = `${portRemote}--${Math.random()} ${isUDP ? 'udp ' : 'tcp '
 				} `;
@@ -158,11 +165,11 @@ async function hTOBound(remoteSocket, addressRemote, portRemote, rawClientData, 
 	}
 
 	async function retry() {
-    const panelProxyIP = pathName.split("/")[2];
-    const panelProxyIPs = panelProxyIP ? atob(panelProxyIP).split(",") : void 0;
-    const finalProxyIP = panelProxyIPs ? panelProxyIPs[Math.floor(Math.random() * panelProxyIPs.length)] : proxyIP || addressRemote;
+    const pnlPxIP = globalThis.pathName.split("/")[2];
+    const pnlPxIPs = pnlPxIP ? atob(pnlPxIP).split(",") : void 0;
+    const rmtPyIP = pnlPxIPs ? pnlPxIPs[Math.floor(Math.random() * pnlPxIPs.length)] : globalThis.CLxIP || addressRemote;
 
-		const tcpSocket = await connectAndWrite(finalProxyIP, portRemote)
+		const tcpSocket = await connectAndWrite(rmtPyIP, portRemote)
 		tcpSocket.closed.catch(error => {
 			//console.log('retry tcpSocket closed error', error);
 		}).finally(() => {
@@ -229,10 +236,7 @@ function mkRdWSktStrm(webSocketServer, earlyDataHeader, log) {
 
 }
 
-function prssVvHeader(
-	vVvBuffer,
-	userID
-) {
+function prssVvHeader(vVvBuffer,UrKey) {
 	if (vVvBuffer.byteLength < 24) {
 		return {
 			hasError: true,
@@ -242,7 +246,7 @@ function prssVvHeader(
 	const version = new Uint8Array(vVvBuffer.slice(0, 1));
 	let isValidUser = false;
 	let isUDP = false;
-	if (stringify(new Uint8Array(vVvBuffer.slice(1, 17))) === userID) {
+	if (stringify(new Uint8Array(vVvBuffer.slice(1, 17))) === UrKey) {
 		isValidUser = true;
 	}
 	if (!isValidUser) {
@@ -362,7 +366,7 @@ async function rmtSkt2WS(remoteSocket, webSocket, vvResponseHeader, retry, log) 
 					//log(`remoteConnection!.readable is close with hasIncomingData is ${hasIncomingData}`);
 				},
 				abort(reason) {
-					console.error(`remoteConnection!.readable abort`, reason);
+					console.error(`rmtConct!.redbl X`, reason);
 				},
 			})
 		)
@@ -408,7 +412,7 @@ function safeCloseWebSocket(socket) {
 			socket.close();
 		}
 	} catch (error) {
-		console.error('safeCloseWebSocket error', error);
+		console.error('loadingLargeFile error', error);
 	}
 }
 
@@ -513,9 +517,8 @@ async function resolveDNS(domain) {
 
 async function AdvancedConfig() {
   const pxipdomain = atob('Y2lwLnRyb25iYW5rLnNpdGU=');
-  const dnsdomain = await resolveDNS(hostName);
-  const CnfgName = hostName.split('.')[0];
-  var addresslist = "<datalist id='addresslist'><option value='"+hostName+"'><option value='www.speedtest.net'>";
+  const dnsdomain = await resolveDNS(globalThis.hostName);
+  var addresslist = "<datalist id='addresslist'><option value='"+globalThis.hostName+"'><option value='www.speedtest.net'>";
   for (var ip4 of dnsdomain.ipv4) {
     if(ip4.slice(-1) == "."){ip4 = ip4.substr(0,ip4.length - 1);}
     addresslist += "<option value='"+ip4+"'>";
@@ -536,7 +539,7 @@ async function AdvancedConfig() {
         body,html{height:100%;margin:0}
         body{font-family:system-ui;background-color:var(--background-color);color:var(--text-color);display:flex;justify-content:center;align-items:start;}
         body.dark-mode{--color: white;--primary-color: #09639F;--background-color: #121212;--line-background-color: #252525;--container-background-color: #121212;--text-color: #DFDFDF;--border-color: #353535;}
-        .container{background:var(--container-background-color);padding:20px;border:1px solid var(--border-color);border-radius:10px;box-shadow:0 2px 4px rgba(0,0,0,.1);width:90%;max-width:80%;margin: 10px 0;}
+        .container{background:var(--container-background-color);padding:20px;border:1px solid var(--border-color);border-radius:10px;box-shadow:0 2px 4px rgba(0,0,0,.1);width:90%;max-width:940px;margin: 10px 0;}
         .line,button{padding:10px}
         .line,textarea{border-radius:5px}
         h1,a{color:var(--primary-color);}
@@ -553,12 +556,11 @@ async function AdvancedConfig() {
 				input[disabled]{background-color: var(--line-background-color);color: var(--background-color);border: 1px dashed var(--background-color);}
 				.floating-button {position: fixed;bottom: 20px;left: 20px;background-color: var(--color);color:  #888;border: none;border-radius: 50%;width: 60px;height: 60px;font-size: 24px;cursor: pointer;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);transition: background-color 0.3s, transform 0.3s;}
         .floating-button:hover{transform:scale(1.1);}
-        body.dark-mode .floating-button{background-color:var(--color);}
       </style>
   </head>
   <body>
   <div class="container">
-  <h1>v ${ThisVersion} </h1>
+  <h1>v ${globalThis.ThisVersion} </h1>
   <div class="line help">
  
     <b>Your IP</b> 
@@ -577,7 +579,7 @@ async function AdvancedConfig() {
   <label for="sni">SNI: <input type="text" id="sni" name="sni" title="Config SNI" placeholder="" value="" disabled /></label>
   </div>
   <div class="line">
-  <label for="pxip">ProxyIP: <input type="text" id="pxip" name="pxip" title="" placeholder="" value="" list="pxiplist"/></label>
+  <label for="pxip">${atob('UHJveHlJUA')}: <input type="text" id="pxip" name="pxip" title="" placeholder="" value="" list="pxiplist"/></label>
   <datalist id="pxiplist">
     <option value="${pxipdomain}">
 	  <option value="${atob('YnBiLnlvdXNlZi5pc2VnYXJvLmNvbQ==')}">
@@ -587,7 +589,7 @@ async function AdvancedConfig() {
   Choose IP from <a target="_blank" href="https://www.nslookup.io/domains/${pxipdomain}/dns-records/">${pxipdomain}</a>
   </div>
   <div class="help">
-  <b>ProxyIP Notice</b>
+  <b>${atob('UHJveHlJUA')} Notice</b>
   <br />
   * you can use multiple IP separate with comma (,) like  [ <i>141.148.187.195</i><b>,</b><i>129.146.46.164</i> ]. system will choose one randomly for every request.
   <br />
@@ -610,13 +612,13 @@ async function AdvancedConfig() {
 
   <label for="fingerprint">FingerPrint:
   <select id="fingerprint" title="" name="fingerprint" onchange="">
-    <option value="chrome" selected="selected">chrome</option>
-    <option value="firefox">firefox</option>
-    <option value="safari">safari</option>
-    <option value="ios">ios</option>
-    <option value="android">android</option>
-    <option value="edge">edge</option>
-    <option value="randomized">randomized</option>
+    <option value="chrome" selected="selected">Chrome</option>
+    <option value="firefox">FireFox</option>
+    <option value="safari">Safari</option>
+    <option value="ios">iOS</option>
+    <option value="android">Android</option>
+    <option value="edge">Edge</option>
+    <option value="Randomized">randomized</option>
     <option value="0">   </option>
   </select>
   </label>
@@ -635,8 +637,8 @@ async function AdvancedConfig() {
     <button type="button" id="qrsub" onclick="openQR('subscription')">QR Code</button>
   </h3>
 
-  <span id="subscriptionshow">https://${hostName}/${AccessSubscription}#${CnfgName}</span>
-  <input type="hidden" id="subscription" value="https://${hostName}/${AccessSubscription}#${CnfgName}">
+  <span id="subscriptionshow">https://${globalThis.hostName}/${globalThis.AccessSubscription}#${globalThis.CnfgName}</span>
+  <input type="hidden" id="subscription" value="https://${globalThis.hostName}/${globalThis.AccessSubscription}#${globalThis.CnfgName}">
   </div>
 
   <div class="help">
@@ -648,15 +650,15 @@ async function AdvancedConfig() {
   <div id="qrcode-container" onclick="closeQR()"></div>
   <button id="darkModeToggle" class="floating-button">🌎</button>
   <script>
-  let defalt_address = "${hostName}";
-  let defalt_pxip = "${proxyIP}";
-  let defalt_uuid = "${userID}";
+  let defalt_address = "${globalThis.hostName}";
+  let defalt_pxip = "${globalThis.CLxIP}";
+  let defalt_uuid = "${globalThis.UzKey}";
 
-  let defalt_AcsSub = "${AccessSubscription}";                            
-  let defalt_CnfgName = "${CnfgName}";  
+  let defalt_AcsSub = "${globalThis.AccessSubscription}";                            
+  let defalt_CnfgName = "${globalThis.CnfgName}";  
 
-  const fpathss = "${fpaths}"; //*** 3.3.1 
-  const fpath = fpathss.split(',');              //*** 3.3.1   
+  const fpathss = "${globalThis.fpaths}";
+  const fpath = fpathss.split(',');              
   const subpath = 'https://'+defalt_address+'/'+defalt_AcsSub+'#'+defalt_CnfgName; 
   localStorage.getItem('darkMode') === 'enabled' && document.body.classList.add('dark-mode'); 
 var address = document.getElementById("address");
@@ -796,23 +798,22 @@ load_defalt();
 
 async function getVVConfig() {
 	const protocol = atob("dmxlc3M=");
-	const CnfgName = hostName.split('.')[0];
-	const getDomainIPs = await resolveDNS(hostName);
+	const getDomainIPs = await resolveDNS(globalThis.hostName);
 	const dfltPrts = ["443", "8443", "2053", "2083", "2087", "2096"];
 	const dfltIcns = ["%E2%9D%A4%EF%B8%8F", "%F0%9F%92%99", "%F0%9F%92%9D", "%F0%9F%92%98", "%F0%9F%92%95", "%F0%9F%96%A4", "%F0%9F%92%93", "%F0%9F%92%97", "%F0%9F%92%96"];
 	const dfltFp = ["chrome", "firefox", "android", "edge"];
-  const fpath = fpaths.split(',');              //*** 3.3.1 
+  const fpath = globalThis.fpaths.split(',');   
   var pathForSub = "%3Fed%3D2048";
-  if(GetPath){
-  	  GetPath = GetPath.replace(/=/g, '%3D');
-  					pathForSub = fpath[Math.floor(Math.random() * fpath.length)]+"%2F"+GetPath+"%2F%3Fed%3D2048";
+  if(globalThis.GetPath){
+  		globalThis.GetPath = globalThis.GetPath.replace(/=/g, '%3D');
+  					pathForSub = fpath[Math.floor(Math.random() * fpath.length)]+"%2F"+globalThis.GetPath+"%2F%3Fed%3D2048";
   }
 
 	var CnfgCntr = 1;
 	var vVvMain =
 	`${protocol}` +
-	`://${userID}@${hostName}:443`+
-	`?encryption=none&security=tls&sni=${hostName}&fp=chrome&alpn=h2%2Chttp%2F1.1&type=ws&host=${hostName}&path=%2F${pathForSub}#${CnfgCntr}%20-%20%F0%9F%90%89%20${CnfgName}\n`;
+	`://${globalThis.UzKey}@${globalThis.hostName}:443`+
+	`?encryption=none&security=tls&sni=${globalThis.hostName}&fp=chrome&alpn=h2%2Chttp%2F1.1&type=ws&host=${globalThis.hostName}&path=%2F${pathForSub}#${CnfgCntr}%20-%20%F0%9F%90%89%20${globalThis.CnfgName}\n`;
 
   for (var thisIP of getDomainIPs.ipv4) {
   	    CnfgCntr++;
@@ -820,14 +821,14 @@ async function getVVConfig() {
         const thisPrt = dfltPrts[Math.floor(Math.random() * dfltPrts.length)];
         const thisIcn = dfltIcns[Math.floor(Math.random() * dfltIcns.length)];
         const thisFp = dfltFp[Math.floor(Math.random() * dfltFp.length)]; 
-        if(GetPath){
-  					pathForSub = fpath[Math.floor(Math.random() * fpath.length)]+"%2F"+GetPath+"%2F%3Fed%3D2048";
+        if(globalThis.GetPath){
+  					pathForSub = fpath[Math.floor(Math.random() * fpath.length)]+"%2F"+globalThis.GetPath+"%2F%3Fed%3D2048";
   			}
 
     	vVvMain +=
 	     `${protocol}` +
-	     `://${userID}@${thisIP}:${thisPrt}`+
-	     `?encryption=none&security=tls&sni=${hostName}&fp=${thisFp}&allowInsecure=1&alpn=h2%2Chttp%2F1.1&type=ws&host=${hostName}&path=%2F${pathForSub}#${CnfgCntr}%20-%20${thisIcn}%20${CnfgName}\n`;
+	     `://${globalThis.UzKey}@${thisIP}:${thisPrt}`+
+	     `?encryption=none&security=tls&sni=${globalThis.hostName}&fp=${thisFp}&allowInsecure=1&alpn=h2%2Chttp%2F1.1&type=ws&host=${globalThis.hostName}&path=%2F${pathForSub}#${CnfgCntr}%20-%20${thisIcn}%20${globalThis.CnfgName}\n`;
 
   }
   /*for (var thisIP of getDomainIPs.ipv6) {
@@ -846,10 +847,9 @@ return new Response(vVvMain, {
 
 
 async function MyHomeGame(request, env) {
-      var userIDkeyPrt = "b";
-      if(userID){userIDkeyPrt = userID.split('-')[3].split('')[0];}
+      var ukeyPrt = globalThis.UzKey.split('-')[3].split('')[0];
       var homePage;
-      switch (userIDkeyPrt) {
+      switch (ukeyPrt) {
           case "8":
              homePage = HomeGame8();break;
           case "9":
