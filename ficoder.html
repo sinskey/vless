@@ -37,7 +37,7 @@
         <hr />
             <form id="configForm">
                 <!--- ////////////////////////////  URL  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-                <details open>
+                <details id="uid-box" open>
 
 
                     <summary><h2>User ID</h2></summary>
@@ -56,7 +56,7 @@
                     </div>
                 </details>
                 <!--- ////////////////////////////  URL  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-                <details>
+                <details id="url-box">
                     <summary><h2>Access URLs</h2>  <span class="optional">  (Optional 😴)</span></summary>
                     
                     <div class="form-control">
@@ -75,7 +75,7 @@
                 </details>
 
                 <!--- ////////////////////////////  Variables  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-                <details>
+                <details id="var-box">
                     <summary><h2>(Variables and Secrets) On Cloudflare</h2>  <span class="optional">  (Optional 😴)</span></summary>
                     
                     <div class="form-control">
@@ -93,7 +93,7 @@
                     </div>
                 </details>
                 <!--- ////////////////////////////  Functions \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-                <details open>
+                <details id="fun-box" open>
                     <summary><h2>Functions</h2>  <span class="necessery">  (Necessery 😱)</span></summary>
                     
                     <div class="form-control">
@@ -209,6 +209,8 @@
                      const inputSaveEl = document.getElementById(inputSave);
                      inputSaveEl.value = localStorage.getItem(inputSave);
             }
+            if(document.getElementById('panel').value || document.getElementById('sub').value){document.getElementById('url-box').open = true;}
+            if(document.getElementById('envuuid').value || document.getElementById('envproxyip').value){document.getElementById('var-box').open = true;}
 
 
 
