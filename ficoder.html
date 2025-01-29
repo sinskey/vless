@@ -154,7 +154,8 @@
                     <div style="grid-column: 2; width: 100%; display: inline-flex;">
                         <input type="submit" id="obfButton" style="margin-right: 10px;" class="button" value="Obfuscator 💨" onclick="ObfuscationNewCode()" disabled>
                         <button id="obfCopyButton" type="button" style="margin-right: 10px;" class="button" onclick="CopyNewCode('obfcode')" disabled>Copy</button>
-                        <button id="obfDnldButton" type="button" class="button" onclick="SendFile('obfcode')" disabled>Download</button>
+                        <button id="obfDnldButton" type="button" style="margin-right: 10px;" class="button" onclick="SendFile('obfcode')" disabled>Save</button>
+                        <button id="obfDnldZipButton" type="button" class="button" onclick="SendZipFile('obfcode')" disabled>Save ZIP</button>
 
                     </div>
              </div>
@@ -180,7 +181,9 @@
         <button id="darkModeToggle" class="floating-button">
             <i id="modeIcon" class="fa fa-2x fa-adjust" style="color: var(--background-color);" aria-hidden="true"></i>
         </button>
+        
     <script src="https://cdn.jsdelivr.net/npm/javascript-obfuscator/dist/index.browser.js"></script>
+    <script type="text/javascript" src="https://stuk.github.io/jszip/dist/jszip.js"></script>
     <script>
         localStorage.getItem('darkMode') === 'enabled' && document.body.classList.add('dark-mode');
         let inputsSave = ["UUID", "panel","sub","envuuid","envproxyip"];
@@ -199,6 +202,7 @@
         const obfCode  = document.getElementById('obfcode');
         const obfCopyButton  = document.getElementById('obfCopyButton');
         const obfDnldButton  = document.getElementById('obfDnldButton');
+        const obfDnldZipButton  = document.getElementById('obfDnldZipButton');
         const HomePage  = document.getElementById('homePage');
 
         document.addEventListener('DOMContentLoaded', async () => {
@@ -363,6 +367,7 @@
 
                 obfCopyButton.disabled = false;
                 obfDnldButton.disabled = false;
+                obfDnldZipButton.disabled = false;
                 obfCode.value =  obfuscationResult.getObfuscatedCode();
 
                 document.body.style.cursor = 'default';
@@ -401,13 +406,34 @@
              for (const inObj of obj) { if(inObj.value){arr[i] = inObj.value; i++;}}
              return findDuplicates(arr);
         }
+
         const SendFile = (id) => {
              const MyCode  = document.getElementById(id);
              if(MyCode.value){downloadCode("_worker.js",MyCode.value);}
         }
-function downloadCode(filename, text) {
+        var zip = new JSZip();
+        const SendZipFile = (id) => {
+             const MyZipCode  = document.getElementById(id);
+             if(MyZipCode.value){
+             var zip = new JSZip();
+                zip.file("_worker.js", MyZipCode.value);//
+                zip.generateAsync({type:"base64"})
+                    .then(function(content) {
+                    downloadCode("worker.zip", content, true);
+                });
+
+             }            
+        }
+
+function downloadCode(filename, text, IsData) {
   var element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  if(IsData){
+    var elementEncoding = 'data:application/zip;base64,';
+  }else{
+    var elementEncoding = 'data:text/plain;charset=utf-8,';
+    text = encodeURIComponent(text);
+  }
+  element.setAttribute('href', elementEncoding + text);
   element.setAttribute('download', filename);
 
   element.style.display = 'none';
