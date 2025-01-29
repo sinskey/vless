@@ -50,15 +50,14 @@
                     <div class="form-control ltr">
                     * It does not need to be set it on Cloudflare > Variables. 
                         <br>
-                    * But if you register the UUID in Variables, will have priority.
+                    * But if you set another UUID in Variables, it will have priority.
                         
                     </div>
                 </details>
                 <!--- ////////////////////////////  URL  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-                <details>
-
-
+                <details open>
                     <summary><h2>Access URLs</h2></summary>
+                    <span>   (Optional 😴)</span>
                     <div class="form-control">
                         <label id="lblpanel" for="panel">/UUID<br><i style="font-size:smaller;">Access to [Advanced Config Generator]</i></label>
                         <input type="text" id="panel" name="bpbdata" value="" pattern="[a-z]{3,}$" title="English lower case letters only">
@@ -75,8 +74,9 @@
                 </details>
 
                 <!--- ////////////////////////////  Variables  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
-                <details>
+                <details open>
                     <summary><h2>(Variables and Secrets) On Cloudflare</h2></summary>
+                    <span>   (Optional 😴)</span>
                     <div class="form-control">
                         <label for="envuuid">UUID</label>
                         <input type="text" id="envuuid" name="bpbdata" value="" placeholder="MyKey" pattern="[a-zA-Z]{2,}$" title="English letters only">
@@ -94,6 +94,7 @@
                 <!--- ////////////////////////////  Functions \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
                 <details open>
                     <summary><h2>Functions</h2></summary>
+                    <span>   (Necessery 😱)</span>
                     <div class="form-control">
                         <label for="vlessOverWSHandler">vlessOverWSHandler() <a title="Generate Random Functions Name" class="random" onclick="setRandom('vlessOverWSHandler')">🎁</a></label>
                         <input type="text" id="vlessOverWSHandler" name="bpbdata" value="" pattern="[a-zA-Z]{5,}$" required>
