@@ -2,21 +2,23 @@
 // @ts-ignore
 
 function MainConfig() {
-	globalThis.uzerID = "12345678-1111-1234-1234-1234567890ab";
-	globalThis.qrexyIP = atob('Y2lwLnRyb25iYW5rLnNpdGU=');
+  globalThis.uzerID = "12345678-1111-1234-1234-1234567890ab";
+  globalThis.qrexyIP = atob('Y2lwLnRyb25iYW5rLnNpdGU=');
 
-	//globalThis.pathName;
+  //globalThis.pathName;
 }
 function WebConfig() {
-	globalThis.ThisVersion = "3.3.4";
+	globalThis.ThisVersion = "3.3.5";
 	globalThis.AccessSubscription = "_SubscriptionURL_";
 	globalThis.AccessAdvancedConfig = "_AdvancedConfigURL_";  
 	globalThis.fpaths = 'js,css,assets,wp-content,themes,app,cdn,jquery,live';  //Path URL: First folder in Sub
-
-	//globalThis.hostName;					
-	//globalThis.GetPath;
-	//globalThis.CnfgName;
+  globalThis.CleanIPDomain = "time.is";
+		//globalThis.hostName;					
+		//globalThis.GetPath;
+		//globalThis.CnfgName;
 }
+
+
 
 export default {
 	async fetch(request, env) {
@@ -517,13 +519,16 @@ async function resolveDNS(domain) {
 
 async function AdvancedConfig() {
   const pxipdomain = atob('Y2lwLnRyb25iYW5rLnNpdGU=');
-  const dnsdomain = await resolveDNS(globalThis.hostName);
+  const dnsdomain1 = await resolveDNS(globalThis.hostName);
+  const dnsdomain2 = await resolveDNS(globalThis.CleanIPDomain);
+  const dnsdomain4 = [...dnsdomain1.ipv4, ...dnsdomain2.ipv4];
+  const dnsdomain6 = [...dnsdomain1.ipv6, ...dnsdomain2.ipv6];  
   var addresslist = "<datalist id='addresslist'><option value='"+globalThis.hostName+"'><option value='www.speedtest.net'>";
-  for (var ip4 of dnsdomain.ipv4) {
+  for (var ip4 of dnsdomain4) {
     if(ip4.slice(-1) == "."){ip4 = ip4.substr(0,ip4.length - 1);}
     addresslist += "<option value='"+ip4+"'>";
   }
-  for (var ip6 of dnsdomain.ipv6) {
+  for (var ip6 of dnsdomain6) {
     if(ip6.slice(-1) == "."){continue;}
     addresslist += "<option value='["+ip6+"]'>";
   }
@@ -798,7 +803,10 @@ load_defalt();
 
 async function getVVConfig() {
 	const protocol = atob("dmxlc3M=");
-	const getDomainIPs = await resolveDNS(globalThis.hostName);
+	const getDomainIPs1 = await resolveDNS(globalThis.hostName);
+  const getDomainIPs2 = await resolveDNS(globalThis.CleanIPDomain);
+  const getDomainIP4s = [...getDomainIPs1.ipv4, ...getDomainIPs2.ipv4];
+  const getDomainIP6s = [...getDomainIPs1.ipv6, ...getDomainIPs2.ipv6];
 	const dfltPrts = ["443", "8443", "2053", "2083", "2087", "2096"];
 	const dfltIcns = ["%E2%9D%A4%EF%B8%8F", "%F0%9F%92%99", "%F0%9F%92%9D", "%F0%9F%92%98", "%F0%9F%92%95", "%F0%9F%96%A4", "%F0%9F%92%93", "%F0%9F%92%97", "%F0%9F%92%96"];
 	const dfltFp = ["chrome", "firefox", "android", "edge"];
@@ -815,7 +823,7 @@ async function getVVConfig() {
 	`://${globalThis.UzKey}@${globalThis.hostName}:443`+
 	`?encryption=none&security=tls&sni=${globalThis.hostName}&fp=chrome&alpn=h2%2Chttp%2F1.1&type=ws&host=${globalThis.hostName}&path=%2F${pathForSub}#${CnfgCntr}%20-%20%F0%9F%90%89%20${globalThis.CnfgName}\n`;
 
-  for (var thisIP of getDomainIPs.ipv4) {
+  for (var thisIP of getDomainIP4s) {
   	    CnfgCntr++;
   	    if(thisIP.slice(-1) == "."){thisIP = thisIP.substr(0,thisIP.length - 1);}
         const thisPrt = dfltPrts[Math.floor(Math.random() * dfltPrts.length)];
