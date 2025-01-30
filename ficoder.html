@@ -1,3 +1,4 @@
+
     <!DOCTYPE html>
     <html lang="fa">
     <head>
@@ -353,6 +354,7 @@ th{
     justify-content: center;
 }
 .button-container button{margin-left: 10px;}
+.form-control button{width: 98%;}
     #apply{
         display:block;
         margin:20px auto 0;
@@ -429,7 +431,7 @@ a{
                         <label for="UUID" style="display:grid;grid-template-columns: 1fr 1fr;align-items: baseline;">Default UUID:
                             <button id="genUUID" type="button" class="button" onclick="GetUUID('UUID')" style="padding: 6px 15px;">Generate ♻️</button>
                         </label>
-                        <input type="text" id="UUID" name="bpbdata" value="" pattern="[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$" title="AutoGnrte">
+                        <input type="text" id="UUID" name="bpbdataUID" value="" pattern="[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$" title="AutoGnrte">
                         <input type="hidden" id="_UUID" value="12345678-1111-1234-1234-1234567890ab">
                     </div>
                     <div class="form-control ltr">
@@ -445,7 +447,7 @@ a{
                     
                     <div class="form-control">
                         <label id="lblpanel" for="panel">/UUID<br><i style="font-size:smaller;">Access to [Advanced Config Generator]</i></label>
-                        <input type="text" id="panel" name="bpbdata" value="" pattern="[a-z]{3,}$" title="English lower case letters only">
+                        <input type="text" id="panel" name="bpbdataURL" value="" pattern="[a-z]{3,}$" title="English lower case letters only">
                         <input type="hidden" id="_panel" value="_AdvancedConfigURL_">
                     </div>
                     <div class="form-control ltr">
@@ -453,7 +455,7 @@ a{
                     </div>
                     <div class="form-control">
                         <label id="lblsub" for="sub">/sub/UUID</label>
-                        <input type="text" id="sub" name="bpbdata" value="" pattern="[a-z]{3,}$" title="English lower case letters only">
+                        <input type="text" id="sub" name="bpbdataURL" value="" pattern="[a-z]{3,}$" title="English lower case letters only">
                         <input type="hidden" id="_sub" value="_SubscriptionURL_">
                     </div>
                 </details>
@@ -464,12 +466,12 @@ a{
                     
                     <div class="form-control">
                         <label for="envuuid">UUID</label>
-                        <input type="text" id="envuuid" name="bpbdata" value="" placeholder="MyKey" pattern="[a-zA-Z]{2,}$" title="English letters only">
+                        <input type="text" id="envuuid" name="bpbdataVAR" value="" placeholder="MyKey" pattern="[a-zA-Z]{2,}$" title="English letters only">
                         <input type="hidden" id="_envuuid" value="env.UUID">
                     </div>
                     <div class="form-control">
                         <label for="envproxyip">PROXYIP</label>
-                        <input type="text" id="envproxyip" name="bpbdata" value="" placeholder="PxIP" pattern="[a-zA-Z]{2,}$" title="English letters only">
+                        <input type="text" id="envproxyip" name="bpbdataVAR" value="" placeholder="PxIP" pattern="[a-zA-Z]{2,}$" title="English letters only">
                         <input type="hidden" id="_envproxyip" value="env.PROXYIP">
                     </div>
                     <div class="form-control ltr">
@@ -479,35 +481,38 @@ a{
                 <!--- ////////////////////////////  Functions \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ -->
                 <details id="fun-box" open>
                     <summary><h2>Functions</h2>  <span class="necessery">  (Necessery 😱)</span></summary>
-                    
+                      <div class="form-control">
+                        <button type="button" class="button" id="ClearAllFUN1" onclick="allClear('FUN1')">Clear All 💧</button>
+                        <button type="button" class="button" id="RandAllFUN1" onclick="allRandom('FUN1')">Random All 🎁</button>
+                    </div>                     
                     <div class="form-control">
                         <label for="vlessOverWSHandler">vlessOverWSHandler() <a title="Generate Random Functions Name" class="random" onclick="setRandom('vlessOverWSHandler')">🎁</a></label>
-                        <input type="text" id="vlessOverWSHandler" name="bpbdata" value="" pattern="[a-zA-Z]{5,}$" required>
+                        <input type="text" id="vlessOverWSHandler" name="bpbdataFUN1" value="" pattern="[a-zA-Z]{5,}$" required>
                         <input type="hidden" id="_vlessOverWSHandler" value="vOWSHandler">
                     </div>
                     <div class="form-control">
                         <label for="handleTCPOutBound">handleTCPOutBound() <a title="Generate Random Functions Name" class="random" onclick="setRandom('handleTCPOutBound')">🎁</a></label>
-                        <input type="text" id="handleTCPOutBound" name="bpbdata" value="" pattern="[a-zA-Z]{5,}$" required>
+                        <input type="text" id="handleTCPOutBound" name="bpbdataFUN1" value="" pattern="[a-zA-Z]{5,}$" required>
                         <input type="hidden" id="_handleTCPOutBound" value="hTOBound">
                     </div>
                     <div class="form-control">
                         <label for="makeReadableWebSocketStream">makeReadableWebSocketStream() <a title="Generate Random Functions Name" class="random" onclick="setRandom('makeReadableWebSocketStream')">🎁</a></label>
-                        <input type="text" id="makeReadableWebSocketStream" name="bpbdata" value="" pattern="[a-zA-Z]{5,}$" required>
+                        <input type="text" id="makeReadableWebSocketStream" name="bpbdataFUN1" value="" pattern="[a-zA-Z]{5,}$" required>
                         <input type="hidden" id="_makeReadableWebSocketStream" value="mkRdWSktStrm">
                     </div>
                     <div class="form-control">
                         <label for="processVlessHeader">processVlessHeader() <a title="Generate Random Functions Name" class="random" onclick="setRandom('processVlessHeader')">🎁</a></label>
-                        <input type="text" id="processVlessHeader" name="bpbdata" value="" pattern="[a-zA-Z]{5,}$" required>
+                        <input type="text" id="processVlessHeader" name="bpbdataFUN1" value="" pattern="[a-zA-Z]{5,}$" required>
                         <input type="hidden" id="_processVlessHeader" value="prssVvHeader">
                     </div>
                     <div class="form-control">
                         <label for="vlessRemoteSocketToWS">vlessRemoteSocketToWS() <a title="Generate Random Functions Name" class="random" onclick="setRandom('vlessRemoteSocketToWS')">🎁</a></label>
-                        <input type="text" id="vlessRemoteSocketToWS" name="bpbdata" value="" pattern="[a-zA-Z]{5,}$" required>
+                        <input type="text" id="vlessRemoteSocketToWS" name="bpbdataFUN1" value="" pattern="[a-zA-Z]{5,}$" required>
                         <input type="hidden" id="_vlessRemoteSocketToWS" value="rmtSkt2WS">
                     </div>
                     <div class="form-control">
                         <label for="handleUDPOutBound">handleUDPOutBound() <a title="Generate Random Functions Name" class="random" onclick="setRandom('handleUDPOutBound')">🎁</a></label>
-                        <input type="text" id="handleUDPOutBound" name="bpbdata" value="" pattern="[a-zA-Z]{5,}$" required>
+                        <input type="text" id="handleUDPOutBound" name="bpbdataFUN1" value="" pattern="[a-zA-Z]{5,}$" required>
                         <input type="hidden" id="_handleUDPOutBound" value="hUOBnd">
                     </div>
                     <div class="form-control ltr">
@@ -575,7 +580,15 @@ a{
         const darkModeToggle = document.getElementById('darkModeToggle');
         const configForm = document.getElementById('configForm');
 
-        const inputsData = document.getElementsByName('bpbdata');
+        let inputsSubData = [];
+         inputsSubData['UID'] = document.getElementsByName('bpbdataUID');
+         inputsSubData['URL'] = document.getElementsByName('bpbdataURL');
+         inputsSubData['VAR'] = document.getElementsByName('bpbdataVAR');
+         inputsSubData['FUN1'] = document.getElementsByName('bpbdataFUN1');
+
+        const inputsData = [...inputsSubData.UID,...inputsSubData.URL,...inputsSubData.VAR,...inputsSubData.FUN1];
+
+
         const SrcCode  = document.getElementById('maincode');
         const GenCode  = document.getElementById('gencode');
         const obfButton  = document.getElementById('obfButton');
@@ -766,12 +779,8 @@ a{
              if(CopyNewCodeEl.value){copyToClipboard(CopyNewCodeEl.value);}
         }
 
-        const setRandom = (id) => {
-             const setRandomEl = document.getElementById(id);
-             if(!setRandomEl.value){setRandomEl.value = generateRandom();}
-        }
-
-             function generateRandom() {
+ 
+        const generateRandom = () => {
                 const charset =
                     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
                 let password = '';
@@ -782,7 +791,25 @@ a{
                     password += charset[randomValues[i] % charset.length];
                 }
                 return password;
+        }
+        const setRandom = (id) => {
+             const setRandomEl = document.getElementById(id);
+             if(!setRandomEl.value){setRandomEl.value = generateRandom();}
+        }
+        const allRandom = (subName) => {
+            var inSubData = inputsSubData[subName];
+            for (const inSData of inSubData) {
+                    setRandom(inSData.id);
             }
+            
+        }
+        const allClear = (subName) => {
+            var inSubData = inputsSubData[subName];
+            for (const inSData of inSubData) {
+                    inSData.value = "";
+            }
+            
+        }
         let findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) !== index)
         const IsDuplicates = (obj) => {
              var arr = [];
