@@ -24,10 +24,10 @@ for using this project better to use [**Advanced Mode**](#advanced-mode)
  
 * **(Variables and Secrets) On Cloudflare**
   * by default you should use **UUID** to set user-ID in (Variables and Secrets) if you changeing it you should use this new character
-  * like **UUID** by changeing **PROXYIP** you should use this new character in (Variables and Secrets)
+  * like **UUID**, by changeing **PROXYIP** you should use this new character in (Variables and Secrets)
  
 * **[Functions]**
-  * it required to changeing Functions Name you cn use 🎁 to Generate random name.
+  * it required to changeing Functions Name you can use 🎁 to Generate random name.
 
 ## Fallback Page
 There are 4 different HTML Game imbedded inside project (not load from other URL) it selected randomly based on UUID you choose.
