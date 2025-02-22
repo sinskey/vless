@@ -1,21 +1,16 @@
-// <!--GAMFC-->version base on commit TDncy4ESqxsjL2fTv2fFauAnwah7EERrSt, time is 2025-01-03 20:47:01 UTC<!--GAMFC-END-->.
+// <!--liMil-->Donate liMil: TDncy4ESqxsjL2fTv2fFauAnwah7EERrSt  ,  https://nowpayments.io/donation/limil <!--liMil-END-->.
 // @ts-ignore
 
 function MainConfig() {
   globalThis.uzerID = "12345678-1111-1234-1234-1234567890ab";
   globalThis.qrexyIP = atob('Y2lwLnRyb25iYW5rLnNpdGU=');
-
-  //globalThis.pathName;
 }
 function WebConfig() {
-	globalThis.ThisVersion = "3.3.5";
+	globalThis.ThisVersion = "3.4.1";
 	globalThis.AccessSubscription = "_SubscriptionURL_";
 	globalThis.AccessAdvancedConfig = "_AdvancedConfigURL_";  
 	globalThis.fpaths = 'js,css,assets,wp-content,themes,app,cdn,jquery,live';  //Path URL: First folder in Sub
   globalThis.CleanIPDomain = "time.is";
-		//globalThis.hostName;					
-		//globalThis.GetPath;
-		//globalThis.CnfgName;
 }
 
 
@@ -33,6 +28,13 @@ export default {
 
 			const url = new URL(request.url);
 			globalThis.pathName = url.pathname;
+
+			if(globalThis.pathName.startsWith("/url-")){
+				var TnlSecKey = "/url-"+globalThis.UzKey.split('-')[0]+"/";
+					if(globalThis.pathName.startsWith(TnlSecKey)){
+							return await hTnlReq(request, globalThis.pathName.replaceAll(TnlSecKey, ""));
+					}
+			}
 
 			const upgradeHeader = request.headers.get('Upgrade');
 			if (!upgradeHeader || upgradeHeader !== 'websocket') {
@@ -494,7 +496,27 @@ async function hUOBnd(webSocket, vvResponseHeader, log) {
 }
 
 
+async function hTnlReq(request, targetUrl) {
+    const url = new URL(request.url);
+    //let targetUrl = url.pathname.slice(1);
+    if(targetUrl.startsWith("aHR0")){
+        targetUrl = atob(targetUrl); 
+    }
+    try {
+        new URL(targetUrl);
+    } catch (e) {
+        return new Response('Invalid URL provided.', { status: 400 });
+    }
 
+    const modifiedRequest = new Request(targetUrl + url.search, { 
+        method: request.method,
+        headers: request.headers,
+        body: request.body,
+        redirect: request.redirect,
+        credentials: request.credentials,
+    });
+    return await fetch(modifiedRequest);
+}
 
 
 async function resolveDNS(domain) {
@@ -523,6 +545,7 @@ async function AdvancedConfig() {
   const dnsdomain2 = await resolveDNS(globalThis.CleanIPDomain);
   const dnsdomain4 = [...dnsdomain1.ipv4, ...dnsdomain2.ipv4];
   const dnsdomain6 = [...dnsdomain1.ipv6, ...dnsdomain2.ipv6];  
+  var TnlSecKey = "url-"+globalThis.UzKey.split('-')[0]+"/";
   var addresslist = "<datalist id='addresslist'><option value='"+globalThis.hostName+"'><option value='www.speedtest.net'>";
   for (var ip4 of dnsdomain4) {
     if(ip4.slice(-1) == "."){ip4 = ip4.substr(0,ip4.length - 1);}
@@ -561,11 +584,18 @@ async function AdvancedConfig() {
 				input[disabled]{background-color: var(--line-background-color);color: var(--background-color);border: 1px dashed var(--background-color);}
 				.floating-button {position: fixed;bottom: 20px;left: 20px;background-color: var(--color);color:  #888;border: none;border-radius: 50%;width: 60px;height: 60px;font-size: 24px;cursor: pointer;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);transition: background-color 0.3s, transform 0.3s;}
         .floating-button:hover{transform:scale(1.1);}
+
+            details { border-bottom: 1px solid var(--border-color);margin-bottom:10px;padding-bottom:10px;}
+            summary {font-weight: bold;cursor: pointer;text-align: center;text-wrap: nowrap;}
+            summary::marker { font-size: 1.5rem; color: var(--primary-color); }
+            summary h2 { display: inline-flex; }
+            .red, red {color:red;text-shadow: #000 0 0 0px;} 
+            .green, green {color:#16c60c;text-shadow: #000 0 0 0px;}
       </style>
   </head>
   <body>
   <div class="container">
-  <h1>v ${globalThis.ThisVersion} </h1>
+  <h1>🗽 Free Internet ${globalThis.ThisVersion} 🐉</h1>
   <div class="line help">
  
     <b>Your IP</b> 
@@ -574,7 +604,11 @@ async function AdvancedConfig() {
     ||
     <b>Others:</b>  <span id="otipdata">---</span> 
     <button type="button" id="ipbtn" onclick="GetIPs();" style="margin: 0;padding: 3px 10px;">Get</button>
-  </div> 
+  </div>
+
+  <details open>
+   <summary><h2>Config</h2></summary> 
+
   <div class="line">
   <label for="address">Address: <input type="text" id="address" name="address" title="Config Address" placeholder="SubDomin.pages.dev" value="" onchange="chkaddress()"  list="addresslist"/></label>
   ${addresslist}
@@ -587,7 +621,7 @@ async function AdvancedConfig() {
   <label for="pxip">${atob('UHJveHlJUA')}: <input type="text" id="pxip" name="pxip" title="" placeholder="" value="" list="pxiplist"/></label>
   <datalist id="pxiplist">
     <option value="${pxipdomain}">
-	  <option value="${atob('YnBiLnlvdXNlZi5pc2VnYXJvLmNvbQ==')}">
+    <option value="${atob('YnBiLnlvdXNlZi5pc2VnYXJvLmNvbQ==')}">
     <option value="${atob('cHJveHlpcC5hbWNsdWJzLmtvem93LmNvbQ==')}">
     <option value="${atob('cHJveHlpcC5meHhrLmRlZHluLmlv')}">
   </datalist>
@@ -641,10 +675,60 @@ async function AdvancedConfig() {
   	<button type="button" id="copysub" onclick="copyToClipboard('subscription')">Copy</button>
     <button type="button" id="qrsub" onclick="openQR('subscription')">QR Code</button>
   </h3>
-
+<div class="help">Subscription ${atob('UHJveHlJUA')}: <span style="font-weight:bold;" id="subscriptionpxip">${pxipdomain}</span></div>
   <span id="subscriptionshow">https://${globalThis.hostName}/${globalThis.AccessSubscription}#${globalThis.CnfgName}</span>
   <input type="hidden" id="subscription" value="https://${globalThis.hostName}/${globalThis.AccessSubscription}#${globalThis.CnfgName}">
   </div>
+</details>
+
+
+  <details>
+   <summary><h2>Tunneling Through</h2></summary> 
+  <div class="line">
+
+  <label for="tnlconfig" style="width:100%">Config: <input type="text" id="tnlconfig" name="tnlconfig" title="Remote Config" placeholder="${atob('dmxlc3M=')}://..." value="" style="width:90%"/></label>
+  </div>
+
+  <div class="help">
+
+  ▶️ <b>For static IP:</b> you can use X-UI, Hiddify config or get <a href="https://www.google.com/search?q=free+${atob('dmxlc3M=')}+${atob('dm1lc3M=')}" target="_blank">free config</a>.
+<br><br>
+  <h3>Limitation:</h3>
+  <ul>
+    <li>
+        ✅ <b>Supported Protocols:</b> <green>${atob('VkxFU1M=')}</green>, <green>${atob('Vk1FU1M=')}</green>, and <green>${atob('VHJvamFu')}</green>.
+    </li><li>
+        ✅ <b>Supported Transmission:</b> <green>WebSocket</green> only.
+    </li><li> 
+        🚫 <b>IP Addresses <red>NOT</red> Supported:</b>
+        <ul><li>         
+            Cloudflare does not support using an IP address as the server address.
+          </li><li> 
+            To use an IP, consider <b>IP.sslip.io</b> as a domain alternative.
+        </li></ul> 
+        
+    </li><li> 
+        🔒 <b>If using TLS:</b>
+        <ul><li>
+            Ensure your domain is correctly pointed to your server and has an active SSL certificate.
+        </li></ul> 
+    </li> 
+  </ul>
+  </div>
+
+
+  <div class="line">
+  <button type="button" id="tnlcnfgenerate" onclick="tnlcnfgenerate()">ReConfig</button>
+  <button type="button" id="tnlcnfcopy" onclick="copyToClipboard('tnlreconfig')">Copy</button>
+  <button type="button" id="tnlcnfqrconfig" onclick="openQR('tnlreconfig')">QR Code</button>
+  <br />
+  <textarea id="tnlreconfig"></textarea>
+
+  <div class="help" id="tnlhelp"></div>
+  </div>
+  
+ </details>
+
 
   <div class="help">
     <center><a href="https://github.com/liMilCo/Free-Internet"><img src="https://github.githubassets.com/favicons/favicon.png" style="vertical-align: middle;" /> Free Internet  🐉</a></center>
@@ -684,8 +768,9 @@ function load_defalt(){
 	darkModeToggle.addEventListener('click', () => {
     const isDarkMode = document.body.classList.toggle('dark-mode');
     localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
-		darkModeToggle.innerHTML = (isDarkMode ? '\u{1F31E}' : '\u{1F319}');
+		darkModeToggle.innerHTML = (isDarkMode ? '🌞' : '🌙');
   });
+  GetLocalStorage();
 }
 function cstm(){
     if(custom.checked){
@@ -732,9 +817,11 @@ function generate(){
         var pxipath = (btoa(pxip.value.replace(/ /g, ''))).replace(/=/g, '%3D');
     	cpath = fpath[Math.floor(Math.random() * fpath.length)]+"%2F"+pxipath+"%2F%3Fed%3D2048";
 
-        SetSub('https://'+defalt_address+'/'+defalt_AcsSub+'?path='+pxipath+'#'+defalt_CnfgName);      
+        SetSub('https://'+defalt_address+'/'+defalt_AcsSub+'?path='+pxipath+'#'+defalt_CnfgName);  
+        document.getElementById("subscriptionpxip").innerHTML = pxip.value;   
     }else{
-        SetSub(subpath); 
+        SetSub(subpath);
+        document.getElementById("subscriptionpxip").innerHTML = defalt_pxip + " (defalt)";  
     } 
                                                                                    
 
@@ -779,12 +866,210 @@ config.value = atob("dmxlc3M=")+"://"+defalt_uuid+"@"+caddress+":"+cport+"?encry
 
     const cfIPresponse = await fetch('https://ipv4.icanhazip.com/?nocache=' + Date.now(), { cache: "no-store" });
     const cfIP = await cfIPresponse.text();
-    const cfResponse = await fetch('https://ipwho.is/?ip=' + cfIP + '&nocache=' + Date.now(), { cache: "no-store" });
+    const cfResponse = await fetch('https://ipwho.is/' + cfIP + '?nocache=' + Date.now(), { cache: "no-store" });
     const cfResponseObj = await cfResponse.json();
     var ipdatacf = cfIP + '  <b>'+cfResponseObj.country+' ('+cfResponseObj.country_code+') </b>';
     document.getElementById('clipdata').innerHTML = ipdatacf; //parse
 
   }
+
+///////////////////////////////////////////////////////////
+// Tnl-Config ////////////////////////////////////////////
+
+    var defalt_tnlsec = "${TnlSecKey}"; 
+    var tnlconfig = document.getElementById("tnlconfig");
+    var tnlreconfig = document.getElementById("tnlreconfig");
+    var tnlhelp = document.getElementById("tnlhelp");
+    var tnlPreName = "🗽 Tnl🞂 ";
+    async function tnlcnfgenerate(){
+        let VlConfig = {};
+        let TnlError = {};
+        var ConfigMode;
+
+        if(!tnlconfig.value){return;}
+        if(tnlconfig.value.startsWith("${atob('dmxlc3M=')}") || tnlconfig.value.startsWith("${atob('dHJvamFu')}") ){
+           VlConfig = GetVlConfig(tnlconfig.value);
+           ConfigMode = "vl";
+        }else if(tnlconfig.value.startsWith("${atob('dm1lc3M=')}")){
+           VlConfig = GetVmConfig(tnlconfig.value);
+           ConfigMode = "vm";
+        }else{
+            alert("⚠️ Supported Protocols: ${atob('VkxFU1M=')}, ${atob('Vk1FU1M=')}, and ${atob('VHJvamFu')}.");
+        }
+
+        VlConfig.base.sni = VlConfig.base.sni ? VlConfig.base.sni.toLowerCase() : "";
+        VlConfig.base.host = VlConfig.base.host ? VlConfig.base.sni.toLowerCase() : "";
+
+        if (/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(VlConfig.base.address)){
+             VlConfig.base.address = VlConfig.base.address+atob("LnNzbGlwLmlv");
+             TnlError.address_is_ip = true;
+        }else{
+            if(VlConfig.base.sni && (VlConfig.base.address !== VlConfig.base.sni)){TnlError.address_not_sni = true;}
+        }
+
+        var new_path_http = "http";
+        if(VlConfig.base.security){if(VlConfig.base.security == "tls"){new_path_http = "https";TnlError.security_is_tls = true;}}
+        var new_path_path = VlConfig.base.path ? VlConfig.base.path : "/";
+        VlConfig.base.path = "/"+defalt_tnlsec+btoa(new_path_http+"://"+VlConfig.base.address+":"+VlConfig.base.port+new_path_path);//
+        if(TnlError.security_is_tls && (TnlError.address_is_ip || TnlError.address_not_sni)){
+            var new_path_sni = "/"+defalt_tnlsec+btoa(new_path_http+"://"+VlConfig.base.sni+":"+VlConfig.base.port+new_path_path);
+        }
+        if(VlConfig.base.type !== "ws"){TnlError.type_not_ws = true;}
+
+        var active_address = VlConfig.base.sni || VlConfig.base.host || VlConfig.base.address;
+          if(active_address == defalt_address || active_address.includes(defalt_address)){TnlError.config_is_self = true;}
+        if(new_path_path.includes(defalt_tnlsec)){TnlError.config_is_selftnl = true;}
+        if(active_address.includes("pages.dev") || active_address.includes("workers.dev") ){TnlError.config_is_worker = true;}
+
+        var TnlIsGood = SetTnlNotice(TnlError, VlConfig);
+        if(!TnlIsGood){return;}
+
+        var NewTnlConfig;
+        tnlreconfig.value = "";
+        if((TnlError.address_is_ip && !VlConfig.base.sni) || (!TnlError.address_is_ip)){
+          tnlreconfig.value += SetConfig(ConfigMode, VlConfig)+"\\n";
+        }
+        if(new_path_sni){
+          VlConfig.base.path = new_path_sni;
+          tnlreconfig.value += SetConfig(ConfigMode, VlConfig)+"\\n";
+        }
+        
+       localStorage.setItem(tnlconfig.id, tnlconfig.value); 
+    }
+    function SetConfig(ConfigMode, VlConfig){
+        if(ConfigMode == "vl"){
+            return SetVlConfig(VlConfig);
+        }else if(ConfigMode == "vm"){ 
+            return SetVmConfig(VlConfig);
+        }
+    }
+    function SetTnlNotice(TnlError, VlConfig){
+      var NewError = "";
+        if(TnlError.config_is_selftnl){
+            alert("⚠️ Do NOT use Tnl inside itself ! ☠️");
+            return false;
+        }
+        if(TnlError.config_is_self){
+            alert("⚠️ Do NOT use my config for Tnl ! 😱");
+            return false;
+        }
+ 
+
+        tnlhelp.innerHTML = "<h3>Notice:</h3>"; 
+
+        if(TnlError.type_not_ws){
+            tnlhelp.innerHTML += "⚠️ <b>Config Transmission is NOT <red>WebSocket</red></b>, Tnl-config is unlikely to work.<br/>";
+        }
+        if(TnlError.address_is_ip){
+          if(TnlError.security_is_tls && VlConfig.base.sni){
+            tnlhelp.innerHTML += "⚠️ <b>Config has an IP as address</b>, so we use SNI (<a href='http://"+VlConfig.base.sni+"' target='_blank'>"+VlConfig.base.sni+"</a>) as config address.<br/>";
+          }else{
+            tnlhelp.innerHTML += "⚠️ <b>Config has an IP as address</b>, so we use <a href='http://"+VlConfig.base.address+"' target='_blank'>"+VlConfig.base.address+"</a> as a domain alternative.<br/>";  
+              if(TnlError.security_is_tls){
+                tnlhelp.innerHTML += "⚠️ <b>Config use TLS</b>, get an active SSL certificate for "+VlConfig.base.address+".<br/>";
+              }                     
+          }
+
+        }else{
+            if(TnlError.address_not_sni){
+                tnlhelp.innerHTML += "⚠️ <b>The sni config is different from the address</b>, two Tnl-config generated: one use address ("+VlConfig.base.address+") second use SNI ("+VlConfig.base.sni+").<br/>"; 
+            }
+        }
+        if(TnlError.config_is_worker){
+          tnlhelp.innerHTML += "⚠️ <b>It is not recommended to use <red>CL-Worker</red> configurations</b>.<br/>"; 
+        } 
+
+        tnlhelp.innerHTML += "<green>🗽 Tnl-Config generated successfully.</green>";
+        
+        
+      return true;
+    }
+
+    function SetVmConfig(SetConfig){
+       var NewConfig;
+
+
+       SetConfig.data.path = SetConfig.base.path;
+       SetConfig.data.sni = SetConfig.data.host = SetConfig.data.add = defalt_address;
+       SetConfig.data.port = "443";
+       SetConfig.data.ps = unescape(encodeURIComponent(tnlPreName))+SetConfig.base.name;
+       if(SetConfig.data.security !== "tls"){
+          SetConfig.data.tls = "tls";
+          SetConfig.data.fp = "chrome";
+          SetConfig.data.alpn = "http/1.1";
+       }
+
+       
+       NewConfig = SetConfig.base.protocol+"://"+btoa(JSON.stringify(SetConfig.data));
+
+
+       return NewConfig;       
+    }
+
+    function SetVlConfig(SetConfig){
+       var NewConfig;
+       var NewDataConfig = "";
+       SetConfig.data.path = SetConfig.base.path;
+       SetConfig.data.sni = SetConfig.data.host = defalt_address;
+       if(SetConfig.data.security !== "tls"){
+          SetConfig.data.allowInsecure = "1";
+          SetConfig.data.fp = "chrome";
+          SetConfig.data.alpn = "http/1.1";
+       }
+       SetConfig.data.security = "tls";
+
+       Object.keys(SetConfig.data).forEach(key => { NewDataConfig += key+"="+encodeURIComponent(SetConfig.data[key])+"&"; });
+       NewDataConfig = NewDataConfig.substr(0,NewDataConfig.length-1);
+
+       NewConfig = SetConfig.base.protocol+"://"+SetConfig.base.id+"@"+defalt_address+":443?"+NewDataConfig+"#"+encodeURIComponent(tnlPreName+SetConfig.base.name);
+
+       return NewConfig;
+    }
+
+    function GetVmConfig(getconfig){
+      let setconfig = {};
+        if(!getconfig.startsWith("${atob('dm1lc3M=')}://")){return false;}
+        getconfig = getconfig.replaceAll("${atob('dm1lc3M=')}://","");
+        getconfig = atob(getconfig);
+        
+        //setconfig  = JSON.parse(getconfig);
+        let setdata = JSON.parse(getconfig);
+
+        setconfig.protocol = "${atob('dm1lc3M=')}";
+        setconfig.address = setdata.add; 
+        setconfig.security = setdata.tls  ? setdata.tls : null; 
+        setconfig.name = setdata.ps  ? setdata.ps : null; 
+        setconfig.type = setdata.net ? setdata.net : null;
+
+      return { "base":{...setdata,...setconfig}, "data":setdata};
+    }
+
+
+    function GetVlConfig(getconfig){
+      let setconfig = {};
+        setconfig.name = getconfig.includes("#") ? decodeURIComponent(getconfig.match(/#([^#]*)/)[1]) : null;
+      
+        setconfig.protocol = getconfig.match(/(.*?):\\/\\//)[1]; //protocol  ["protocol"]
+        setconfig.id = getconfig.match(/\\:\\/\\/(.*?)\\@/)[1];
+        setconfig.address = getconfig.match(/@([a-z0-9.-]{2,}):/)[1];
+        setconfig.port = getconfig.match(/:([0-9]{2,})\\?/)[1];
+
+        if(!getconfig.includes("#")){getconfig += "#";}
+        let setdata = JSON.parse(decodeURIComponent('{ "'+getconfig.replaceAll('&','","').replaceAll('=','":"').match(/\\?(.*?)#/)[1]+'" }'));
+
+        return { "base":{...setconfig,...setdata}, "data":setdata};
+    }
+
+    function GetLocalStorage(){
+      if (localStorage.length > 0) {
+        Object.keys(localStorage).forEach(key => {
+          if(document.getElementById(key))
+          document.getElementById(key).value = localStorage.getItem(key);
+        });
+      }
+      
+    }
+
 
 load_defalt();
   </script>
