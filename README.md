@@ -57,6 +57,11 @@ Limitation:
 
 ![image](https://github.com/user-attachments/assets/519afb34-34e7-4979-8b21-9cc1ed2b1ebf)
 
+
+
+## Stargazers over time
+[![Stargazers over time](https://starchart.cc/liMilCo/Free-Internet.svg?variant=adaptive)](https://starchart.cc/liMilCo/Free-Internet)
+
 ## Thank`s
 1. Thanks to the developers who wrote the [Cloudflare-Workers](https://github.com/topics/cloudflare-workers) core for vless proxy.
 2. Thanks to [BPB Panel](https://github.com/bia-pain-bache/BPB-Worker-Panel) for develop technology and new ideas.
