@@ -42,6 +42,19 @@ There are 4 different HTML Game imbedded inside project (not load from other URL
 ## [Advanced Config Generator] Page
 ![image](https://github.com/user-attachments/assets/a4f6d6b0-9614-4228-b0fc-0c0b4a70fbb2)
 
+## Tunneling Through
+▶️ **For static IP:** you can use X-UI, Hiddify config or get [free config](https://www.google.com/search?q=free+vless+vmess).
+
+Limitation:
+* ✅ **Supported Protocols:** VLESS, VMESS, and Trojan.
+* ✅ **Supported Transmission:** WebSocket only.
+* 🚫 **IP Addresses NOT Supported:**
+  * Cloudflare does not support using an IP address as the server address.
+  * To use an IP, consider _IP.sslip.io_ as a domain alternative.
+* 🔒 **If using TLS**:
+  * Ensure your domain is correctly pointed to your server and has an active SSL certificate.
+
+![image](https://github.com/user-attachments/assets/519afb34-34e7-4979-8b21-9cc1ed2b1ebf)
 
 ## Thank`s
 1. Thanks to the developers who wrote the [Cloudflare-Workers](https://github.com/topics/cloudflare-workers) core for vless proxy.
