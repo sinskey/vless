@@ -1,5 +1,6 @@
 # [Free-Internet](https://github.com/liMilCo/Free-Internet)
-Access to Free Internet
+* CloudFlare Worker VLESS [🐉](#advanced-config-generator-page)
+* CloudFlare Tunneling Through [🗽](#tunneling-through)
 
 for using this project better to use [**Advanced Mode**](#advanced-mode)
 
