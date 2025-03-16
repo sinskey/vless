@@ -6,7 +6,7 @@ function MainConfig() {
   globalThis.qrexyIP = atob('Y2lwLnRyb25iYW5rLnNpdGU=');
 }
 function WebConfig() {
-	globalThis.ThisVersion = "3.4.1";
+	globalThis.ThisVersion = "3.4.2";
 	globalThis.AccessSubscription = "_SubscriptionURL_";
 	globalThis.AccessAdvancedConfig = "_AdvancedConfigURL_";  
 	globalThis.fpaths = 'js,css,assets,wp-content,themes,app,cdn,jquery,live';  //Path URL: First folder in Sub
@@ -771,6 +771,7 @@ function load_defalt(){
 		darkModeToggle.innerHTML = (isDarkMode ? '🌞' : '🌙');
   });
   GetLocalStorage();
+  DetailsBoxShow();
 }
 function cstm(){
     if(custom.checked){
@@ -960,6 +961,9 @@ config.value = atob("dmxlc3M=")+"://"+defalt_uuid+"@"+caddress+":"+cport+"?encry
         if(TnlError.type_not_ws){
             tnlhelp.innerHTML += "⚠️ <b>Config Transmission is NOT <red>WebSocket</red></b>, Tnl-config is unlikely to work.<br/>";
         }
+        if(VlConfig.base.security == "reality"){
+            tnlhelp.innerHTML += "⚠️ <b>Config Security is <red>reality</red></b>, Tnl-config is unlikely to work.<br/>";
+        }
         if(TnlError.address_is_ip){
           if(TnlError.security_is_tls && VlConfig.base.sni){
             tnlhelp.innerHTML += "⚠️ <b>Config has an IP as address</b>, so we use SNI (<a href='http://"+VlConfig.base.sni+"' target='_blank'>"+VlConfig.base.sni+"</a>) as config address.<br/>";
@@ -971,7 +975,7 @@ config.value = atob("dmxlc3M=")+"://"+defalt_uuid+"@"+caddress+":"+cport+"?encry
           }
 
         }else{
-            if(TnlError.address_not_sni){
+            if(TnlError.security_is_tls && TnlError.address_not_sni){
                 tnlhelp.innerHTML += "⚠️ <b>The sni config is different from the address</b>, two Tnl-config generated: one use address ("+VlConfig.base.address+") second use SNI ("+VlConfig.base.sni+").<br/>"; 
             }
         }
@@ -1055,6 +1059,7 @@ config.value = atob("dmxlc3M=")+"://"+defalt_uuid+"@"+caddress+":"+cport+"?encry
         setconfig.port = getconfig.match(/:([0-9]{2,})\\?/)[1];
 
         if(!getconfig.includes("#")){getconfig += "#";}
+        if(getconfig.includes("%22")){getconfig = getconfig.replaceAll("%22","%27");}
         let setdata = JSON.parse(decodeURIComponent('{ "'+getconfig.replaceAll('&','","').replaceAll('=','":"').match(/\\?(.*?)#/)[1]+'" }'));
 
         return { "base":{...setconfig,...setdata}, "data":setdata};
@@ -1070,7 +1075,20 @@ config.value = atob("dmxlc3M=")+"://"+defalt_uuid+"@"+caddress+":"+cport+"?encry
       
     }
 
-
+    function DetailsBoxShow(){    
+            const detailsElements = document.querySelectorAll("details");
+            detailsElements.forEach((details, index) => {
+                const savedState = localStorage.getItem("fi_detailsBox-" + index);
+                if (savedState === "closed") {
+                    details.open = false;
+                } else {
+                    details.open = true;
+                }
+                details.addEventListener("toggle", function () {
+                    localStorage.setItem("fi_detailsBox-" + index, details.open ? "open" : "closed");
+                });
+            });
+    }
 load_defalt();
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
