@@ -57,7 +57,8 @@ Limitation:
 
 ![image](https://github.com/user-attachments/assets/519afb34-34e7-4979-8b21-9cc1ed2b1ebf)
 
-
+## Project View
+![Counter](https://count.getloli.com/@Free-Internet?theme=sketch-1&padding=4)
 
 ## Stargazers over time
 [![Stargazers over time](https://starchart.cc/liMilCo/Free-Internet.svg?variant=adaptive)](https://starchart.cc/liMilCo/Free-Internet)
