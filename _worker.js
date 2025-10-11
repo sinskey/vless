@@ -2,7 +2,7 @@
 // @ts-ignore
 
 function MainConfig() {
-  globalThis.uzerID = "12345678-1111-1234-1234-1234567890ab";
+  globalThis.uzerID = "ca5be1a2-af83-4d24-be4d-49feba98c768";
   globalThis.qrexyIP = atob('Y2lwLnRyb25iYW5rLnNpdGU=');
 }
 function WebConfig() {
@@ -1290,3 +1290,4 @@ async function MyHomeGame(request, env) {
 </html>`;
     return homePage;
 }
+
